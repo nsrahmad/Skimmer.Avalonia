@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Skimmer.Avalonia.Models;
-using Skimmer.Core.Data;
+using Skimmer.Core.Nanorm;
 
 namespace Skimmer.Avalonia.ViewModels;
 
