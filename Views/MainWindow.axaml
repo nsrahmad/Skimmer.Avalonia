@@ -21,77 +21,86 @@
         <local:DateConverter x:Key="DateConverter" />
     </Window.Resources>
 
-    <Grid ColumnDefinitions="*,4*" RowDefinitions="Auto,*,Auto,*">
+    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,*">
         <Menu Grid.ColumnSpan="2">
             <MenuItem Command="{Binding UpdateAllFeedsCommand}"
                       Header="_Update All Feeds" />
             <MenuItem Command="{Binding MarkAllAsReadCommand}"
                       Header="_Mark All as read" />
         </Menu>
-        <ListBox ItemsSource="{Binding Feeds}"
-                 SelectedItem="{Binding SelectedFeed}"
-                 SelectionMode="AlwaysSelected"
-                 Grid.Row="1" Grid.Column="0" Grid.RowSpan="3">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel VerticalAlignment="Center">
-                        <Label IsVisible="{Binding UnreadItems}"
-                               Content="{Binding UnreadItems}"
-                               Background="{DynamicResource AccentButtonBackground}"
-                               Foreground="{DynamicResource AccentButtonForeground}"
-                               Padding="8 2"
-                               Height="25"
-                               VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               VerticalContentAlignment="Center"
-                               HorizontalContentAlignment="Center"
-                               CornerRadius="25"
-                               DockPanel.Dock="Right" />
-                        <Label Content="{Binding Title}"
-                               VerticalContentAlignment="Center"
-                               RenderOptions.TextRenderingMode="SubpixelAntialias"
-                               Height="25" />
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <DataGrid ItemsSource="{Binding SelectedFeed.Items}"
+		<SplitView IsPaneOpen="True"
+				   DisplayMode="Inline"
+				   OpenPaneLength="150"
+				   Grid.Row="1" 
+				   Grid.Column="0"
+				   Grid.RowSpan="2">
+			<SplitView.Pane>
+				<ListBox ItemsSource="{Binding Feeds}"
+				SelectedItem="{Binding SelectedFeed}"
+				SelectionMode="AlwaysSelected">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<DockPanel VerticalAlignment="Center">
+								<Label IsVisible="{Binding UnreadItems}"
+									   Content="{Binding UnreadItems}"
+									   Background="{DynamicResource AccentButtonBackground}"
+									   Foreground="{DynamicResource AccentButtonForeground}"
+									   Padding="8 2"
+									   Height="25"
+									   VerticalAlignment="Center"
+									   HorizontalAlignment="Center"
+									   VerticalContentAlignment="Center"
+									   HorizontalContentAlignment="Center"
+									   CornerRadius="25"
+									   DockPanel.Dock="Right" />
+								<Label Content="{Binding Title}"
+									   VerticalContentAlignment="Center"
+									   RenderOptions.TextRenderingMode="SubpixelAntialias"
+									   Height="25" />
+							</DockPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</SplitView.Pane>
+
+			<DataGrid ItemsSource="{Binding SelectedFeed.Items}"
                   IsReadOnly="True"
                   CanUserResizeColumns="True"
                   GridLinesVisibility="All"
                   HeadersVisibility="None"
                   SelectedItem="{Binding SelectedFeedItem}"
-                  SelectedIndex="{Binding SelectedFeed.Items[0], Mode=OneWay}"
-                  Grid.Column="1" Grid.Row="1">
-            <DataGrid.Styles>
-                <Style Selector="DataGridCell > TextBlock.isRead">
-                    <Setter Property="FontWeight" Value="Normal" />
-                </Style>
-                <Style Selector="DataGridCell > TextBlock.isNotRead">
-                    <Setter Property="FontWeight" Value="Bold" />
-                </Style>
-                <Style Selector="DataGrid:focus DataGridCell:current /template/ Grid#FocusVisual">
-                    <Setter Property="IsVisible" Value="false" />
-                </Style>
-            </DataGrid.Styles>
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Width="2*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Title}"
-                                       VerticalAlignment="Center"
-                                       Padding="5 0"
-                                       RenderOptions.TextRenderingMode="SubpixelAntialias"
-                                       Classes.isRead="{Binding IsRead}"
-                                       Classes.isNotRead="{Binding !IsRead}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Binding="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"
-                                    Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <Border Grid.Row="2" Grid.Column="1"
+                  SelectedIndex="{Binding SelectedFeed.Items[0], Mode=OneWay}">
+				<DataGrid.Styles>
+					<Style Selector="DataGridCell > TextBlock.isRead">
+						<Setter Property="FontWeight" Value="Normal" />
+					</Style>
+					<Style Selector="DataGridCell > TextBlock.isNotRead">
+						<Setter Property="FontWeight" Value="Bold" />
+					</Style>
+					<Style Selector="DataGrid:focus DataGridCell:current /template/ Grid#FocusVisual">
+						<Setter Property="IsVisible" Value="false" />
+					</Style>
+				</DataGrid.Styles>
+				<DataGrid.Columns>
+					<DataGridTemplateColumn Width="2*">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding Title}"
+										   VerticalAlignment="Center"
+										   Padding="5 0"
+										   RenderOptions.TextRenderingMode="SubpixelAntialias"
+										   Classes.isRead="{Binding IsRead}"
+										   Classes.isNotRead="{Binding !IsRead}" />
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTextColumn Binding="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"
+										Width="*" />
+				</DataGrid.Columns>
+			</DataGrid>
+		</SplitView>
+        
+        <Border Grid.Row="1" Grid.Column="1"
                 BorderBrush="Black"
                 BorderThickness="1">
             <StackPanel Margin="10">
@@ -103,6 +112,6 @@
         </Border>
         <av:HtmlPanel Text="{Binding SelectedFeedItem.Description}"
                       Margin="10"
-                      Grid.Row="3" Grid.Column="1" />
+                      Grid.Row="2" Grid.Column="1" />
     </Grid>
 </Window>
