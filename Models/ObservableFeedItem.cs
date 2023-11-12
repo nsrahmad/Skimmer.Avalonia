@@ -20,4 +20,6 @@ public class ObservableFeedItem(FeedItem item) : ObservableObject
     public string Description => item.Description;
 
     public string Link => $"<a href=\"{item.Link}\">{item.Link}</a>";
+
+    public int FeedId => item.FeedId;
 }

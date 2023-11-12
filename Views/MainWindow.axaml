@@ -30,16 +30,16 @@
         </Menu>
 		<SplitView IsPaneOpen="True"
 				   DisplayMode="Inline"
-				   OpenPaneLength="150"
+				   OpenPaneLength="200"
 				   Grid.Row="1" 
 				   Grid.Column="0"
 				   Grid.RowSpan="2">
 			<SplitView.Pane>
-				<ListBox ItemsSource="{Binding Feeds}"
-				SelectedItem="{Binding SelectedFeed}"
-				SelectionMode="AlwaysSelected">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
+				<TreeView ItemsSource="{Binding Feeds}"
+				          SelectedItem="{Binding SelectedFeed}"
+				          SelectionMode="AlwaysSelected">
+					<TreeView.ItemTemplate>
+						<TreeDataTemplate ItemsSource="{Binding Children}">
 							<DockPanel VerticalAlignment="Center">
 								<Label IsVisible="{Binding UnreadItems}"
 									   Content="{Binding UnreadItems}"
@@ -58,9 +58,9 @@
 									   RenderOptions.TextRenderingMode="SubpixelAntialias"
 									   Height="25" />
 							</DockPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
+						</TreeDataTemplate>
+					</TreeView.ItemTemplate>
+				</TreeView>
 			</SplitView.Pane>
 
 			<DataGrid ItemsSource="{Binding SelectedFeed.Items}"

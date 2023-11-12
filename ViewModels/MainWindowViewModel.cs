@@ -27,9 +27,20 @@ public partial class MainWindowViewModel : ViewModelBase
     partial void OnSelectedFeedItemChanged(ObservableFeedItem? value)
     {
         if (value == null) return;
+        if (value.IsRead) return;
         value.IsRead = true;
         _manager.MarkAsRead(value.FeedItemId);
-        SelectedFeed.UnreadItems = SelectedFeed.Items.Count(item => !item.IsRead);
+        if (SelectedFeed.Children != null)
+        {
+            SelectedFeed.Children.First(f => f.FeedId == value.FeedId).UnreadItems--;
+            SelectedFeed.UnreadItems--;
+        }
+        else
+        {
+            Feeds.First(f => f.FeedId == SelectedFeed.ParentId).UnreadItems--;
+            SelectedFeed.UnreadItems = SelectedFeed.Items.Count(item => !item.IsRead);
+        }
+        
     }
 
     [RelayCommand]
@@ -58,9 +69,12 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task OnUpdateAllFeeds()
     {
-        var feeds = await _manager.GetAllFeedsAsync();
-        var tasks = new List<Task>(feeds.Count);
-        tasks.AddRange(feeds.Select(feed => UpdateFeedAsync(feed.FeedId)));
+        var dirs = await _manager.GetAllFeedsAsync();
+        var tasks = new List<Task>(dirs.Sum(dir => dir.Children!.Count));
+        foreach (var dir in dirs)
+        {
+            tasks.AddRange(dir.Children!.Select(f => UpdateFeedAsync(f.FeedId)));
+        }
         await Task.WhenAll(tasks);
     }
 
@@ -70,10 +84,13 @@ public partial class MainWindowViewModel : ViewModelBase
         if (newItems != null)
         {
             var f = Feeds.SingleOrDefault(f => f.FeedId == feedId);
-            foreach (var i in newItems)
+            if (f != null)
             {
-                f!.Items.Insert(0, new ObservableFeedItem(i));
-                f.UnreadItems++;
+                foreach (var i in newItems)
+                {
+                    f!.Items.Insert(0, new ObservableFeedItem(i));
+                    f.UnreadItems++;
+                }
             }
         }
     }
@@ -83,7 +100,10 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         await _manager.InitDbAsync();
         var feeds = await _manager.GetAllFeedsAsync();
-        foreach (var feed in feeds) Feeds.Add(new ObservableFeed(feed));
+        foreach (var feedDirectory in feeds)
+        {
+            Feeds.Add(new ObservableFeed(feedDirectory));
+        }
         await UpdateAllFeedsCommand.ExecuteAsync(null);
     }
 }
