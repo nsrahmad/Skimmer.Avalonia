@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Skimmer.Avalonia.Converters"
+		xmlns:views="clr-namespace:Skimmer.Avalonia.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Skimmer.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -35,32 +36,7 @@
 				   Grid.Column="0"
 				   Grid.RowSpan="2">
 			<SplitView.Pane>
-				<TreeView ItemsSource="{Binding Feeds}"
-				          SelectedItem="{Binding SelectedFeed}"
-				          SelectionMode="AlwaysSelected">
-					<TreeView.ItemTemplate>
-						<TreeDataTemplate ItemsSource="{Binding Children}">
-							<DockPanel VerticalAlignment="Center">
-								<Label IsVisible="{Binding UnreadItems}"
-									   Content="{Binding UnreadItems}"
-									   Background="{DynamicResource AccentButtonBackground}"
-									   Foreground="{DynamicResource AccentButtonForeground}"
-									   Padding="8 2"
-									   Height="25"
-									   VerticalAlignment="Center"
-									   HorizontalAlignment="Center"
-									   VerticalContentAlignment="Center"
-									   HorizontalContentAlignment="Center"
-									   CornerRadius="25"
-									   DockPanel.Dock="Right" />
-								<Label Content="{Binding Title}"
-									   VerticalContentAlignment="Center"
-									   RenderOptions.TextRenderingMode="SubpixelAntialias"
-									   Height="25" />
-							</DockPanel>
-						</TreeDataTemplate>
-					</TreeView.ItemTemplate>
-				</TreeView>
+				<views:FeedDirectoryViewControl DataContext="{Binding }"></views:FeedDirectoryViewControl>
 			</SplitView.Pane>
 
 			<DataGrid ItemsSource="{Binding SelectedFeed.Items}"
