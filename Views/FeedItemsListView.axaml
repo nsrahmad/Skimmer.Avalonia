@@ -3,45 +3,54 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Skimmer.Avalonia.ViewModels"
-			 xmlns:converter="clr-namespace:Skimmer.Avalonia.Converters;assembly=Skimmer.Avalonia"
+             xmlns:converter="clr-namespace:Skimmer.Avalonia.Converters;assembly=Skimmer.Avalonia"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="650"
              x:Class="Skimmer.Avalonia.Views.FeedItemsListView"
              x:DataType="vm:MainWindowViewModel">
 
-	<Design.DataContext>
-		<vm:MainWindowViewModel />
-	</Design.DataContext>
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
 
-	<UserControl.Resources>
-		<converter:DateConverter x:Key="DateConverter" />
-	</UserControl.Resources>
+    <UserControl.Resources>
+        <converter:DateConverter x:Key="DateConverter" />
+    </UserControl.Resources>
 
-	<!--For Design preview, Set the binding to Feeds[0].Items -->
-	<ListBox ItemsSource="{Binding SelectedFeed.Items}"
-			 SelectedItem="{Binding SelectedFeedItem}"
-		 SelectionMode="AlwaysSelected"
-			 Margin="4 0"
-			 CornerRadius="4">
-		<ListBox.Styles>
-			<Style Selector="ListBoxItem">
-				<Setter Property="CornerRadius" Value="4" />
-			</Style>
-			<Style Selector="ListBoxItem TextBlock.isRead">
-				<Setter Property="FontWeight" Value="Normal" />
-			</Style>
-			<Style Selector="ListBoxItem TextBlock.isNotRead">
-				<Setter Property="FontWeight" Value="Bold" />
-			</Style>
-		</ListBox.Styles>
-		<ListBox.ItemTemplate>
-			<DataTemplate>
-					<TextBlock Text="{Binding Title}"
-							   Classes.isRead="{Binding IsRead}"
-							   Classes.isNotRead="{Binding !IsRead}"
-							   TextWrapping="Wrap"
-							   ToolTip.Tip="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"/>
+    <!--For Design preview, Set the binding to Feeds[0].Items -->
+    <ListBox ItemsSource="{Binding SelectedFeed.Items}"
+             SelectedItem="{Binding SelectedFeedItem}"
+             SelectionMode="AlwaysSelected"
+             Margin="4 0"
+			 BorderThickness="1"
+			 BorderBrush="{DynamicResource ControlBackgroundBrush}"
+             CornerRadius="4">
+        <ListBox.Styles>
+            <Style Selector="ListBoxItem">
+                <Setter Property="CornerRadius" Value="4" />
+				<Setter Property="Margin" Value="4 0 4 4" />
+				<Setter Property="Background" Value="{DynamicResource SystemAltHighColor}" />
+            </Style>
+            <Style Selector="ListBoxItem TextBlock.isRead">
+                <Setter Property="FontWeight" Value="Normal" />
+            </Style>
+            <Style Selector="ListBoxItem TextBlock.isNotRead">
+                <Setter Property="FontWeight" Value="Bold" />
+            </Style>
+        </ListBox.Styles>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+				<DockPanel Background="Transparent">
+					<Label Content="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"
+						   DockPanel.Dock="Bottom" 
+						   FontSize="11"
+						   Margin="0 8 0 0"/>
+                    <TextBlock Text="{Binding Title}"
+                               Classes.isRead="{Binding IsRead}"
+                               Classes.isNotRead="{Binding !IsRead}"
+                               TextWrapping="Wrap" />
+				</DockPanel>
 			</DataTemplate>
-		</ListBox.ItemTemplate>
-	</ListBox>
+        </ListBox.ItemTemplate>
+    </ListBox>
 
 </UserControl>
