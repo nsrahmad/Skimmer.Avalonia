@@ -12,50 +12,48 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Skimmer 0.1">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel />
-    </Design.DataContext>
+		<vm:MainWindowViewModel />
+	</Design.DataContext>
 
-    <Window.Resources>
+	<Window.Resources>
 		<conv:ThemeColorConverter x:Key="ThemeColorConverter" />
 		<conv:StringToHtmlLinkConverter x:Key="StringToHtmlLinkConverter" />
-    </Window.Resources>
+	</Window.Resources>
+	
+	<Grid ColumnDefinitions="Auto,2*,2*"
+		  RowDefinitions="Auto,Auto,*" >
+		
+		<StackPanel Grid.Row="0"
+			        Grid.Column="0"
+					Grid.ColumnSpan="3">
+		</StackPanel>
 
-    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,*">
-        <Menu Grid.ColumnSpan="2">
-            <MenuItem Command="{Binding UpdateAllFeedsCommand}"
-                      Header="_Update All Feeds" />
-            <MenuItem Command="{Binding MarkAllAsReadCommand}"
-                      Header="_Mark All as read" />
-        </Menu>
-		<SplitView IsPaneOpen="True"
-				   DisplayMode="Inline"
-				   OpenPaneLength="200"
-				   Grid.Row="1" 
-				   Grid.Column="0"
+		<views:FeedDirectoryViewControl DataContext="{Binding }"
+										Grid.Row="1"
+										Grid.Column="0"
 										Grid.RowSpan="2" />
-
+		
 		<views:FeedItemsListView DataContext="{Binding }"
 								 Grid.Row="1"
 				  Grid.Column="1"
 				  Grid.RowSpan="2"/>
-        
-        <Border Grid.Row="1" Grid.Column="1"
-                BorderBrush="Black"
-                BorderThickness="1">
-            <StackPanel Margin="10">
-                <TextBlock Text="{Binding SelectedFeedItem.Title}"
+
+		<Border Grid.Row="1" Grid.Column="2">
+			<StackPanel >
+				<TextBlock Text="{Binding SelectedFeedItem.Title}"
                            TextWrapping="Wrap"
+                           Padding="8"
                            FontSize="18" />
 				<av:HtmlLabel Text="{Binding SelectedFeedItem.Link, Converter={StaticResource StringToHtmlLinkConverter}}"
                               Padding="8 0"
 							  ToolTip.Tip="{Binding SelectedFeedItem.Link}"/>
-            </StackPanel>
-        </Border>
+			</StackPanel>
+		</Border>
 		<av:HtmlPanel Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}"
 				 Grid.Row="2"
 				 Grid.Column="2" />
-    </Grid>
+	</Grid>
 </Window>
