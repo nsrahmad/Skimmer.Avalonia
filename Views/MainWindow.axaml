@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:conv="clr-namespace:Skimmer.Avalonia.Converters"
 		xmlns:views="clr-namespace:Skimmer.Avalonia.Views"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="950" d:DesignHeight="450"
         x:Class="Skimmer.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -89,8 +89,8 @@
 							  ToolTip.Tip="{Binding SelectedFeedItem.Link}"/>
             </StackPanel>
         </Border>
-        <av:HtmlPanel Text="{Binding SelectedFeedItem.Description}"
-                      Margin="10"
-                      Grid.Row="2" Grid.Column="1" />
+		<av:HtmlPanel Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}"
+				 Grid.Row="2"
+				 Grid.Column="2" />
     </Grid>
 </Window>
