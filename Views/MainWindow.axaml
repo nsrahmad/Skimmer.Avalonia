@@ -4,13 +4,13 @@
         xmlns:av="clr-namespace:TheArtOfDev.HtmlRenderer.Avalonia;assembly=Avalonia.HtmlRenderer"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Skimmer.Avalonia.Converters"
+        xmlns:conv="clr-namespace:Skimmer.Avalonia.Converters"
 		xmlns:views="clr-namespace:Skimmer.Avalonia.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Skimmer.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Skimmer">
+        Title="Skimmer 0.1">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -19,7 +19,8 @@
     </Design.DataContext>
 
     <Window.Resources>
-        <local:DateConverter x:Key="DateConverter" />
+		<conv:ThemeColorConverter x:Key="ThemeColorConverter" />
+		<conv:StringToHtmlLinkConverter x:Key="StringToHtmlLinkConverter" />
     </Window.Resources>
 
     <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,*">
@@ -83,7 +84,9 @@
                 <TextBlock Text="{Binding SelectedFeedItem.Title}"
                            TextWrapping="Wrap"
                            FontSize="18" />
-                <av:HtmlLabel Text="{Binding SelectedFeedItem.Link}" />
+				<av:HtmlLabel Text="{Binding SelectedFeedItem.Link, Converter={StaticResource StringToHtmlLinkConverter}}"
+                              Padding="8 0"
+							  ToolTip.Tip="{Binding SelectedFeedItem.Link}"/>
             </StackPanel>
         </Border>
         <av:HtmlPanel Text="{Binding SelectedFeedItem.Description}"
