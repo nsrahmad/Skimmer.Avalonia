@@ -14,7 +14,7 @@
 	<TreeView ItemsSource="{Binding Feeds}"
 		          SelectionMode="AlwaysSelected"
 				          SelectedItem="{Binding SelectedFeed}"
-				          SelectionMode="AlwaysSelected">
+		          Name="FeedDirectoryView"
 				  Margin="4 0">
 			<TreeView.Styles>
 				<Style Selector="TreeViewItem">
