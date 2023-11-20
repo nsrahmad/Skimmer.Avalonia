@@ -1,9 +1,9 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="using:Skimmer.Avalonia.ViewModels"
              mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignHeight="450"
              x:Class="Skimmer.Avalonia.Views.FeedDirectoryViewControl"
 			 x:DataType="vm:MainWindowViewModel">
 
@@ -12,27 +12,40 @@
 	</Design.DataContext>
 
 	<TreeView ItemsSource="{Binding Feeds}"
+		          SelectionMode="AlwaysSelected"
 				          SelectedItem="{Binding SelectedFeed}"
 				          SelectionMode="AlwaysSelected">
+				  Margin="4 0">
+			<TreeView.Styles>
+				<Style Selector="TreeViewItem">
+					<Setter Property="IsExpanded" Value="True"></Setter>
+				</Style>
+				<Style Selector="TreeViewItem">
+					<Setter Property="CornerRadius" Value="4"></Setter>
+				</Style>
+			</TreeView.Styles>
 		<TreeView.ItemTemplate>
 			<TreeDataTemplate ItemsSource="{Binding Children}">
-				<DockPanel VerticalAlignment="Center">
-					<Label IsVisible="{Binding UnreadItems}"
-						   Content="{Binding UnreadItems}"
-						   Background="{DynamicResource AccentButtonBackground}"
+					<DockPanel VerticalAlignment="Center"
+							   Background="Transparent">
+						<DockPanel.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="Copy" />
+								<MenuItem Header="Paste" />
+							</ContextMenu>
+						</DockPanel.ContextMenu>
+						<Label Content="{Binding UnreadItems}"
+							   Background="{DynamicResource SystemAccentColor}"
+							   CornerRadius="24"
+							   FontSize="12"
+							   Padding="4 2"
+							   Margin="8 0"
+							   IsVisible="{Binding UnreadItems}"
+							   VerticalAlignment="Center"
 						   Foreground="{DynamicResource AccentButtonForeground}"
-						   Padding="8 2"
-						   Height="25"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Center"
-						   VerticalContentAlignment="Center"
-						   HorizontalContentAlignment="Center"
-						   CornerRadius="25"
-						   DockPanel.Dock="Right" />
+							   DockPanel.Dock="Right"></Label>
 					<Label Content="{Binding Title}"
-						   VerticalContentAlignment="Center"
-						   RenderOptions.TextRenderingMode="SubpixelAntialias"
-						   Height="25" />
+							   VerticalContentAlignment="Center" />
 				</DockPanel>
 			</TreeDataTemplate>
 		</TreeView.ItemTemplate>
