@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="using:Skimmer.Avalonia.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="450"
+			 xmlns:ic="using:FluentIcons.Avalonia"
              mc:Ignorable="d" d:DesignHeight="450"
              x:Class="Skimmer.Avalonia.Views.FeedDirectoryViewControl"
 			 x:DataType="vm:MainWindowViewModel">
@@ -11,9 +11,29 @@
 		<vm:MainWindowViewModel />
 	</Design.DataContext>
 
-	<TreeView ItemsSource="{Binding Feeds}"
+	<DockPanel MinWidth="200">
+		<StackPanel Orientation="Horizontal" 
+					Margin="4" 
+					Spacing="4"
+					DockPanel.Dock="Bottom">
+			<Button Background="{DynamicResource ControlBackgroundBrush}"
+					Foreground="{DynamicResource SystemAccentColor}"
+					ToolTip.Tip="Update All Feeds"
+					Command="{Binding UpdateAllFeedsCommand}">
+				<ic:SymbolIcon Symbol="ArrowSync"
+							   IsFilled="True"
+							   FontSize="18"></ic:SymbolIcon>
+			</Button>
+			<Button Background="{DynamicResource ControlBackgroundBrush}"
+					Foreground="{DynamicResource SystemAccentColor}"
+					ToolTip.Tip="Mark All as Read"
+					Command="{Binding MarkAllAsReadCommand}">
+				<ic:SymbolIcon Symbol="CheckmarkNote" IsFilled="True" FontSize="18"></ic:SymbolIcon>
+			</Button>
+		</StackPanel>
+		<TreeView ItemsSource="{Binding Feeds}"
 		          SelectionMode="AlwaysSelected"
-				          SelectedItem="{Binding SelectedFeed}"
+		          SelectedItem="{Binding SelectedFeed}"
 		          Name="FeedDirectoryView"
 				  Margin="4 0">
 			<TreeView.Styles>
@@ -24,8 +44,8 @@
 					<Setter Property="CornerRadius" Value="4"></Setter>
 				</Style>
 			</TreeView.Styles>
-		<TreeView.ItemTemplate>
-			<TreeDataTemplate ItemsSource="{Binding Children}">
+			<TreeView.ItemTemplate>
+				<TreeDataTemplate ItemsSource="{Binding Children}">
 					<DockPanel VerticalAlignment="Center"
 							   Background="Transparent">
 						<DockPanel.ContextMenu>
@@ -42,12 +62,13 @@
 							   Margin="8 0"
 							   IsVisible="{Binding UnreadItems}"
 							   VerticalAlignment="Center"
-						   Foreground="{DynamicResource AccentButtonForeground}"
+							   Foreground="{DynamicResource AccentButtonForeground}"
 							   DockPanel.Dock="Right"></Label>
-					<Label Content="{Binding Title}"
+						<Label Content="{Binding Title}"
 							   VerticalContentAlignment="Center" />
-				</DockPanel>
-			</TreeDataTemplate>
-		</TreeView.ItemTemplate>
-	</TreeView>
+					</DockPanel>
+				</TreeDataTemplate>
+			</TreeView.ItemTemplate>
+		</TreeView>
+	</DockPanel>
 </UserControl>
