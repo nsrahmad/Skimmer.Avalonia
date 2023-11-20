@@ -35,47 +35,12 @@
 				   OpenPaneLength="200"
 				   Grid.Row="1" 
 				   Grid.Column="0"
-				   Grid.RowSpan="2">
-			<SplitView.Pane>
-				<views:FeedDirectoryViewControl DataContext="{Binding }"></views:FeedDirectoryViewControl>
-			</SplitView.Pane>
+										Grid.RowSpan="2" />
 
-			<DataGrid ItemsSource="{Binding SelectedFeed.Items}"
-                  IsReadOnly="True"
-                  CanUserResizeColumns="True"
-                  GridLinesVisibility="All"
-                  HeadersVisibility="None"
-                  SelectedItem="{Binding SelectedFeedItem}"
-                  SelectedIndex="{Binding SelectedFeed.Items[0], Mode=OneWay}">
-				<DataGrid.Styles>
-					<Style Selector="DataGridCell > TextBlock.isRead">
-						<Setter Property="FontWeight" Value="Normal" />
-					</Style>
-					<Style Selector="DataGridCell > TextBlock.isNotRead">
-						<Setter Property="FontWeight" Value="Bold" />
-					</Style>
-					<Style Selector="DataGrid:focus DataGridCell:current /template/ Grid#FocusVisual">
-						<Setter Property="IsVisible" Value="false" />
-					</Style>
-				</DataGrid.Styles>
-				<DataGrid.Columns>
-					<DataGridTemplateColumn Width="2*">
-						<DataGridTemplateColumn.CellTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding Title}"
-										   VerticalAlignment="Center"
-										   Padding="5 0"
-										   RenderOptions.TextRenderingMode="SubpixelAntialias"
-										   Classes.isRead="{Binding IsRead}"
-										   Classes.isNotRead="{Binding !IsRead}" />
-							</DataTemplate>
-						</DataGridTemplateColumn.CellTemplate>
-					</DataGridTemplateColumn>
-					<DataGridTextColumn Binding="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"
-										Width="*" />
-				</DataGrid.Columns>
-			</DataGrid>
-		</SplitView>
+		<views:FeedItemsListView DataContext="{Binding }"
+								 Grid.Row="1"
+				  Grid.Column="1"
+				  Grid.RowSpan="2"/>
         
         <Border Grid.Row="1" Grid.Column="1"
                 BorderBrush="Black"
