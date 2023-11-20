@@ -31,11 +31,4 @@
         <ProjectReference Include="..\Skimmer.Core.Nanorm\Skimmer.Core.Nanorm.csproj" />
         <ProjectReference Include="..\Skimmer.Core\Skimmer.Core.csproj" />
     </ItemGroup>
-
-
-    <ItemGroup>
-      <Compile Update="Views\FeedDirectoryViewControl.axaml.cs">
-        <DependentUpon>FeedDirectoryViewControl.axaml</DependentUpon>
-      </Compile>
-    </ItemGroup>
 </Project>
