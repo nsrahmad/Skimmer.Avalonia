@@ -26,14 +26,7 @@ public partial class ObservableFeed : ObservableObject
         var children = GetFeedChildren(feed);
 
         Items = new ObservableCollection<ObservableFeedItem>(items);
-        if (children != null)
-        {
-            Children = new ObservableCollection<ObservableFeed>(children);
-        } else
-        {
-            Children = null;
-        }
-        return;
+        Children = children != null ? new ObservableCollection<ObservableFeed>(children) : null;
 
         int GetUnreadItems(Feed feed1)
         {
@@ -51,9 +44,7 @@ public partial class ObservableFeed : ObservableObject
 
         ICollection<ObservableFeed>? GetFeedChildren(Feed feed3)
         {
-            return feed3.Children != null
-                ? feed3.Children.Select(f => new ObservableFeed(f)).ToList()
-                : null;
+            return feed3.Children?.Select(f => new ObservableFeed(f)).ToList();
         }
     }
 
@@ -62,5 +53,7 @@ public partial class ObservableFeed : ObservableObject
     public string Title => _feed.Title;
 
     public int ParentId => _feed.ParentId;
+
+    public string ImageUrl => _feed.ImageUrl;
 
 }
