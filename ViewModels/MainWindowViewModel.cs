@@ -22,7 +22,7 @@ public partial class MainWindowViewModel : ViewModelBase
         SeedDataCommand.ExecuteAsync(null);
     }
 
-    public ObservableCollection<ObservableFeed> Feeds { get; } = new();
+    public ObservableCollection<ObservableFeed> Feeds { get; } = [];
 
     partial void OnSelectedFeedItemChanged(ObservableFeedItem? value)
     {
