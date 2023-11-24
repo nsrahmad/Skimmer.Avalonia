@@ -7,6 +7,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <ApplicationIcon>Assets\Skimmer.ico</ApplicationIcon> 
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <AssemblyName>Skimmer</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
