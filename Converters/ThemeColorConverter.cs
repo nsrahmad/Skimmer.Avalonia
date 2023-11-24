@@ -16,10 +16,12 @@ public class ThemeColorConverter : IValueConverter
         Application.Current!.TryGetResource("ControlContentThemeFontSize", Application.Current.ActualThemeVariant, out var size);
 
         var fgBrush = (SolidColorBrush)fg!;
-        var bgBrush = (SolidColorBrush)bg!;
-        var fontSize = (double)size!;
         
-        /* For a more complete Web renderer, this is best. But not supported by Avalonia.Html
+        // For a more complete Web renderer, this is best. But not supported by Avalonia.Html
+        // var bgBrush = (SolidColorBrush)bg!;
+        // var fontSize = (double)size!;
+        //
+        /* 
          *  <style> 
                   html * { 
                     color : rgba({{fgBrush.Color.R}},{{fgBrush.Color.G}},{{fgBrush.Color.B}},{{fgBrush.Color.A}});
@@ -31,16 +33,15 @@ public class ThemeColorConverter : IValueConverter
                 </style> 
          */
 
-        var text = $$"""
-                <body style=" color : rgba({{fgBrush.Color.R}},{{fgBrush.Color.G}},{{fgBrush.Color.B}},{{fgBrush.Color.A}});">
-                {{value}}
+        return $"""
+                <body style=" color : rgba({fgBrush.Color.R},{fgBrush.Color.G},{fgBrush.Color.B},{fgBrush.Color.A});">
+                {value}
                 </body>
                 """;
-        return text;
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        return value;
+        return new NotSupportedException();
     }
 }
