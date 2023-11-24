@@ -9,7 +9,7 @@
         mc:Ignorable="d" d:DesignWidth="950" d:DesignHeight="450"
         x:Class="Skimmer.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/Skimmer.ico"
         Title="Skimmer 0.1">
 
 	<Design.DataContext>

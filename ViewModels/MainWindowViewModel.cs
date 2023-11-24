@@ -19,7 +19,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        SeedDataCommand.ExecuteAsync(null);
+        SeedDataCommand.Execute(null);
     }
 
     public ObservableCollection<ObservableFeed> Feeds { get; } = [];
@@ -88,7 +88,7 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 foreach (var i in newItems)
                 {
-                    f!.Items.Insert(0, new ObservableFeedItem(i));
+                    f.Items.Insert(0, new ObservableFeedItem(i));
                     f.UnreadItems++;
                 }
             }
@@ -96,14 +96,14 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task OnSeedData()
+    private void OnSeedData()
     {
-        await _manager.InitDbAsync();
-        var feeds = await _manager.GetAllFeedsAsync();
-        foreach (var feedDirectory in feeds)
+        _manager.InitDbAsync();
+        var feeds = _manager.GetAllFeedsAsync();
+        foreach (var feedDirectory in feeds.Result)
         {
             Feeds.Add(new ObservableFeed(feedDirectory));
         }
-        await UpdateAllFeedsCommand.ExecuteAsync(null);
+        UpdateAllFeedsCommand.ExecuteAsync(null);
     }
 }
