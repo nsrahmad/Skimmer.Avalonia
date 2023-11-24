@@ -56,4 +56,5 @@ public partial class ObservableFeed : ObservableObject
 
     public string ImageUrl => _feed.ImageUrl;
 
+    public string Description => _feed.Description;
 }
