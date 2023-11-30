@@ -1,5 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="using:Skimmer.Avalonia.ViewModels"
 			 xmlns:ic="using:FluentIcons.Avalonia"
@@ -26,7 +27,7 @@
 			<Button Background="{DynamicResource ControlBackgroundBrush}"
 					ToolTip.Tip="Mark All as Read"
 					Command="{Binding MarkAllAsReadCommand}">
-				<ic:SymbolIcon Symbol="CheckmarkNote" IsFilled="True" FontSize="18"></ic:SymbolIcon>
+				<ic:SymbolIcon Symbol="CheckmarkNote" IsFilled="True" FontSize="18" />
 			</Button>
 		</StackPanel>
 		<TreeView ItemsSource="{Binding Feeds}"
