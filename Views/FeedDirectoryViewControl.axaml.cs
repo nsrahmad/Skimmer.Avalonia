@@ -15,7 +15,7 @@ public partial class FeedDirectoryViewControl : UserControl
     // Needed because TreeView AlwaysSelected is buggy
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
-        FeedDirectoryView.SelectedItem = FeedDirectoryView.Items[0];
+        if (FeedDirectoryView.Items.Count != 0) FeedDirectoryView.SelectedItem = FeedDirectoryView.Items[0];
         base.OnApplyTemplate(e);
     }
 }
