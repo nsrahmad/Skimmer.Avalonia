@@ -2,9 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using Skimmer.Avalonia.Models;
+using Skimmer.Core.Models;
 using Skimmer.Core.Nanorm;
 
 namespace Skimmer.Avalonia.ViewModels;
@@ -19,7 +22,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        SeedDataCommand.Execute(null);
+        SeedDataCommand.ExecuteAsync(null);
     }
 
     public ObservableCollection<ObservableFeed> Feeds { get; } = [];
@@ -44,9 +47,15 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task OnUpdateFeed(int feedId)
+    private Task<Feed?> OnAddFeed(string link)
     {
-        await UpdateFeedAsync(feedId);
+       return _manager.AddFeedAsync(link);
+    }
+
+    [RelayCommand]
+    private Task OnUpdateFeed(int feedId)
+    {
+        return UpdateFeedAsync(feedId);
     }
 
     [RelayCommand]
@@ -96,14 +105,27 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void OnSeedData()
+    private async Task OnSeedData()
     {
-        _manager.InitDbAsync();
-        var feeds = _manager.GetAllFeedsAsync();
-        foreach (var feedDirectory in feeds.Result)
+        await _manager.InitDbAsync();
+        var feeds = await _manager.GetAllFeedsAsync();
+
+        if (feeds[0].Children!.Count == 0)
+        { 
+            Task[] tasks = [
+                AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/dotnet/.rss"),
+                AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/csharp/.rss"),
+                AddFeedCommand.ExecuteAsync("https://www.osnews.com/files/recent.xml"),
+                AddFeedCommand.ExecuteAsync("https://news.ycombinator.com/rss"),
+                AddFeedCommand.ExecuteAsync("https://xkcd.com/rss.xml")
+            ];
+
+            await Task.WhenAll(tasks);
+        }
+        foreach (var feedDirectory in feeds)
         {
             Feeds.Add(new ObservableFeed(feedDirectory));
         }
-        UpdateAllFeedsCommand.ExecuteAsync(null);
+        await UpdateAllFeedsCommand.ExecuteAsync(null);
     }
 }
