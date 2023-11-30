@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
-        <ApplicationIcon>Assets\Skimmer.ico</ApplicationIcon> 
+        <ApplicationIcon>Assets\Skimmer.ico</ApplicationIcon>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <AssemblyName>Skimmer</AssemblyName>
     </PropertyGroup>
