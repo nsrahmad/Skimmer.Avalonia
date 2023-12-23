@@ -111,16 +111,16 @@ public partial class MainWindowViewModel : ViewModelBase
         var feeds = await _manager.GetAllFeedsAsync();
 
         if (feeds[0].Children!.Count == 0)
-        { 
-            Task[] tasks = [
+        {
+
+            await Task.WhenAll([
                 AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/dotnet/.rss"),
                 AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/csharp/.rss"),
                 AddFeedCommand.ExecuteAsync("https://www.osnews.com/files/recent.xml"),
                 AddFeedCommand.ExecuteAsync("https://news.ycombinator.com/rss"),
-                AddFeedCommand.ExecuteAsync("https://xkcd.com/rss.xml")
-            ];
-
-            await Task.WhenAll(tasks);
+                AddFeedCommand.ExecuteAsync("https://xkcd.com/rss.xml"),
+                AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/nsfw411/.rss")
+            ]);
         }
         foreach (var feedDirectory in feeds)
         {

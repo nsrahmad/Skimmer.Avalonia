@@ -10,7 +10,7 @@
         x:Class="Skimmer.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/Skimmer.ico"
-        Title="Skimmer 0.1">
+        Title="Skimmer">
 
 	<Design.DataContext>
 		<!-- This only sets the DataContext for the previewer in an IDE,
