@@ -16,7 +16,8 @@ public class ThemeColorConverter : IValueConverter
         Application.Current!.TryGetResource("ControlContentThemeFontSize", Application.Current.ActualThemeVariant, out var size);
 
         var fgBrush = (SolidColorBrush)fg!;
-        
+        var bgBrush = (SolidColorBrush)bg!;
+
         // For a more complete Web renderer, this is best. But not supported by Avalonia.Html
         // var bgBrush = (SolidColorBrush)bg!;
         // var fontSize = (double)size!;
@@ -34,9 +35,12 @@ public class ThemeColorConverter : IValueConverter
          */
 
         return $"""
-                <body style=" color : rgba({fgBrush.Color.R},{fgBrush.Color.G},{fgBrush.Color.B},{fgBrush.Color.A});">
+                <div style="color : rgba({fgBrush.Color.R},{fgBrush.Color.G},{fgBrush.Color.B},{fgBrush.Color.A});
+                    font-size: {size}px; 
+                    font-family: Inter,Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+                    background-color: rgba({bgBrush.Color.R},{bgBrush.Color.G},{bgBrush.Color.B},{bgBrush.Color.A});">
                 {value}
-                </body>
+                </div>
                 """;
     }
 
