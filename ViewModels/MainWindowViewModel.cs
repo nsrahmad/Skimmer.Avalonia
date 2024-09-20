@@ -63,11 +63,12 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task OnMarkAllAsRead()
     {
         await _manager.MarkAllAsReadAsync();
-        foreach (var feed in Feeds)
-        {
-            feed.UnreadItems = 0;
-            foreach (var item in feed.Items) item.IsRead = true;
-        }
+        if (Feeds != null)
+            foreach (var feed in Feeds)
+            {
+                feed.UnreadItems = 0;
+                foreach (var item in feed.Items) item.IsRead = true;
+            }
     }
 
     [RelayCommand]
@@ -87,9 +88,9 @@ public partial class MainWindowViewModel : ViewModelBase
         var newItems = await _manager.UpdateFeedAsync(feedId);
         if (newItems != null)
         {
-            var f = Feeds.First(f => f.FeedId == feedId);
-            if (f != null)
+            if (Feeds != null)
             {
+                var f = Feeds.First(f => f.FeedId == feedId);
                 foreach (var i in newItems)
                 {
                     f.Items.Insert(0, new ObservableFeedItem(i));
@@ -105,7 +106,7 @@ public partial class MainWindowViewModel : ViewModelBase
         await _manager.InitDbAsync();
         var feeds = await _manager.GetAllFeedsAsync();
 
-        if (feeds[0].Children!.Count == 0)
+        if (feeds.Count == 0)
         {
 
             await Task.WhenAll([
@@ -118,8 +119,13 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         foreach (var feedDirectory in feeds)
         {
-            if (Feeds.Count < 1) Feeds.Add(new ObservableFeed(feedDirectory));
-            SelectedFeed = Feeds[0];
+            if (Feeds != null)
+            {
+                Feeds =
+                [
+                    new ObservableFeed(feedDirectory)
+                ];
+            }
         }
     }
 }
