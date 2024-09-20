@@ -14,8 +14,12 @@
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
 
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<DebugSymbols>False</DebugSymbols>
+		<DebugType>None</DebugType>
+	</PropertyGroup>
 
-    <ItemGroup>
+	<ItemGroup>
         <PackageReference Include="Avalonia" Version="11.2.999-cibuild0051954-alpha" />
         <PackageReference Include="Avalonia.Desktop" Version="11.2.999-cibuild0051954-alpha" />
         <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.999-cibuild0051954-alpha" />
