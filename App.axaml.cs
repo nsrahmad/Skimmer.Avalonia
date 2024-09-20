@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-
+using Microsoft.Extensions.DependencyInjection;
 using Skimmer.Avalonia.ViewModels;
 using Skimmer.Avalonia.Views;
 
@@ -17,6 +17,13 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        // DI root
+        var collection = new ServiceCollection();
+        collection.AddTransient<MainWindowViewModel>();
+
+        var services = collection.BuildServiceProvider();
+        var vm = services.GetRequiredService<MainWindowViewModel>();
+        vm.SeedDataCommand.ExecuteAsync(null);
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             // Line below is needed to remove Avalonia data validation.
@@ -24,7 +31,7 @@ public class App : Application
             BindingPlugins.DataValidators.RemoveAt(0);
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel()
+                DataContext = vm
             };
         }
 
