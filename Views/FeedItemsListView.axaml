@@ -21,7 +21,6 @@
              SelectedItem="{Binding SelectedFeedItem}"
              SelectionMode="AlwaysSelected"
              Margin="4 0"
-			 BorderThickness="1"
 			 BorderBrush="{DynamicResource ControlBackgroundBrush}"
              CornerRadius="4">
         <ListBox.Styles>

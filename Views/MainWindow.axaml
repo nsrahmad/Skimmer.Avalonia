@@ -53,7 +53,8 @@
 			</StackPanel>
 		</Border>
 		<av:HtmlPanel Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}"
-				 Grid.Row="2"
-				 Grid.Column="2" />
+					  Padding="8 0"
+					  Grid.Row="2"
+					  Grid.Column="2" />
 	</Grid>
 </Window>
