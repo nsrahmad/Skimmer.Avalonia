@@ -92,7 +92,7 @@ public partial class MainWindowViewModel : ViewModelBase
         var newItems = await _manager.UpdateFeedAsync(feedId);
         if (newItems != null)
         {
-            var f = Feeds.SingleOrDefault(f => f.FeedId == feedId);
+            var f = Feeds.First(f => f.FeedId == feedId);
             if (f != null)
             {
                 foreach (var i in newItems)
@@ -119,7 +119,6 @@ public partial class MainWindowViewModel : ViewModelBase
                 AddFeedCommand.ExecuteAsync("https://www.osnews.com/files/recent.xml"),
                 AddFeedCommand.ExecuteAsync("https://news.ycombinator.com/rss"),
                 AddFeedCommand.ExecuteAsync("https://xkcd.com/rss.xml"),
-                AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/nsfw411/.rss")
             ]);
         }
         foreach (var feedDirectory in feeds)
