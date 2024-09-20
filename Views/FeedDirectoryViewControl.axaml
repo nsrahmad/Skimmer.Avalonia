@@ -53,8 +53,8 @@
 							   ToolTip.Tip="{Binding Description}">
 						<DockPanel.ContextMenu>
 							<ContextMenu>
-								<MenuItem Header="Copy" />
-								<MenuItem Header="Paste" />
+								<MenuItem Header="Mark All as read" />
+								<MenuItem Header="Delete" />
 							</ContextMenu>
 						</DockPanel.ContextMenu>
 						<Label Content="{Binding UnreadItems}"
