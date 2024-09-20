@@ -123,8 +123,8 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         foreach (var feedDirectory in feeds)
         {
-            Feeds.Add(new ObservableFeed(feedDirectory));
+            if (Feeds.Count < 1) Feeds.Add(new ObservableFeed(feedDirectory));
+            SelectedFeed = Feeds[0];
         }
-        await UpdateAllFeedsCommand.ExecuteAsync(null);
     }
 }
