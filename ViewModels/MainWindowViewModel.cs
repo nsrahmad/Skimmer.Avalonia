@@ -20,12 +20,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableFeedItem? _selectedFeedItem;
 
-    public MainWindowViewModel()
-    {
-        SeedDataCommand.ExecuteAsync(null);
-    }
-
-    public ObservableCollection<ObservableFeed> Feeds { get; } = [];
+    [ObservableProperty] private ObservableCollection<ObservableFeed>? _feeds;
 
     partial void OnSelectedFeedItemChanged(ObservableFeedItem? value)
     {
@@ -40,7 +35,7 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         else
         {
-            Feeds.First(f => f.FeedId == SelectedFeed.ParentId).UnreadItems--;
+            if (Feeds != null) Feeds.First(f => f.FeedId == SelectedFeed.ParentId).UnreadItems--;
             SelectedFeed.UnreadItems = SelectedFeed.Items.Count(item => !item.IsRead);
         }
         
