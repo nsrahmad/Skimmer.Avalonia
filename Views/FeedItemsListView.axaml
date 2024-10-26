@@ -16,8 +16,7 @@
         <converter:DateConverter x:Key="DateConverter" />
     </UserControl.Resources>
 
-    <!--For Design preview, Set the binding to Feeds[0].Items -->
-    <ListBox ItemsSource="{Binding SelectedFeed.Items}"
+    <ListBox ItemsSource="{Binding SelectedFeed.FeedItems}"
              SelectedItem="{Binding SelectedFeedItem}"
              SelectionMode="AlwaysSelected"
              Margin="4 0"
@@ -26,7 +25,7 @@
         <ListBox.Styles>
             <Style Selector="ListBoxItem">
                 <Setter Property="CornerRadius" Value="4" />
-				<Setter Property="Margin" Value="4 0 4 4" />
+				<Setter Property="Margin" Value="4 2" />
 				<Setter Property="Background" Value="{DynamicResource SystemAltHighColor}" />
             </Style>
             <Style Selector="ListBoxItem TextBlock.isRead">
