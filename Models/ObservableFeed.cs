@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +10,7 @@ public partial class ObservableFeed : ObservableObject
 {
     private readonly Feed _feed;
 
-    [ObservableProperty] private ObservableCollection<ObservableFeedItem> _items;
+    [ObservableProperty] private ObservableCollection<ObservableFeedItem> _feedItems;
 
     [ObservableProperty] private int _unreadItems;
 
@@ -25,7 +24,7 @@ public partial class ObservableFeed : ObservableObject
         var items = GetFeedItems(feed);
         var children = GetFeedChildren(feed);
 
-        Items = new ObservableCollection<ObservableFeedItem>(items);
+        FeedItems = new ObservableCollection<ObservableFeedItem>(items);
         Children = children != null ? new ObservableCollection<ObservableFeed>(children) : null;
 
         int GetUnreadItems(Feed feed1)

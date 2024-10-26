@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Skimmer.Avalonia.Models;
+using Skimmer.Core.Data;
 using Skimmer.Core.Models;
 using Skimmer.Core.Nanorm;
 
@@ -14,17 +15,25 @@ namespace Skimmer.Avalonia.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    private readonly NanormFeedManager _manager = new();
+    private readonly IFeedManager _manager = new NanormFeedManager();
 
-    [ObservableProperty] private ObservableFeed _selectedFeed = default!;
+    [ObservableProperty] private ObservableFeed _selectedFeed;
 
-    [ObservableProperty] private ObservableFeedItem? _selectedFeedItem;
+    [ObservableProperty] private ObservableFeedItem _selectedFeedItem;
 
-    [ObservableProperty] private ObservableCollection<ObservableFeed>? _feeds;
+    public ObservableCollection<ObservableFeed> Feeds { get; set; } = [];
 
-    partial void OnSelectedFeedItemChanged(ObservableFeedItem? value)
+    public MainWindowViewModel()
     {
-        if (value == null) return;
+        // This is intentionally synchronous call.
+        SeedDataCommand.Execute(null);
+        SelectedFeed = Feeds[0];
+        SelectedFeedItem = SelectedFeed.FeedItems[0];
+        UpdateAllFeedsCommand.ExecuteAsync(null);
+    }
+
+    partial void OnSelectedFeedItemChanged(ObservableFeedItem value)
+    {
         if (value.IsRead) return;
         value.IsRead = true;
         _manager.MarkAsRead(value.FeedItemId);
@@ -35,8 +44,8 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         else
         {
-            if (Feeds != null) Feeds.First(f => f.FeedId == SelectedFeed.ParentId).UnreadItems--;
-            SelectedFeed.UnreadItems = SelectedFeed.Items.Count(item => !item.IsRead);
+            Feeds.First(f => f.FeedId == SelectedFeed.ParentId).UnreadItems--;
+            SelectedFeed.UnreadItems = SelectedFeed.FeedItems.Count(item => !item.IsRead);
         }
         
     }
@@ -57,18 +66,18 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task OnDeleteFeed(int feedId)
     {
         await _manager.DeleteFeedAsync(feedId);
+        Feeds.Remove(Feeds[0].Children!.First((x => x.FeedId == feedId)));
     }
 
     [RelayCommand]
     private async Task OnMarkAllAsRead()
     {
         await _manager.MarkAllAsReadAsync();
-        if (Feeds != null)
-            foreach (var feed in Feeds)
-            {
-                feed.UnreadItems = 0;
-                foreach (var item in feed.Items) item.IsRead = true;
-            }
+        foreach (var feed in Feeds)
+        {
+            feed.UnreadItems = 0;
+            foreach (var item in feed.FeedItems) item.IsRead = true;
+        }
     }
 
     [RelayCommand]
@@ -88,14 +97,11 @@ public partial class MainWindowViewModel : ViewModelBase
         var newItems = await _manager.UpdateFeedAsync(feedId);
         if (newItems != null)
         {
-            if (Feeds != null)
+            var f = Feeds[0].Children!.First(f => f.FeedId == feedId);
+            foreach (var i in newItems)
             {
-                var f = Feeds.First(f => f.FeedId == feedId);
-                foreach (var i in newItems)
-                {
-                    f.Items.Insert(0, new ObservableFeedItem(i));
-                    f.UnreadItems++;
-                }
+                f.FeedItems.Insert(0, new ObservableFeedItem(i));
+                f.UnreadItems++;
             }
         }
     }
@@ -106,26 +112,17 @@ public partial class MainWindowViewModel : ViewModelBase
         await _manager.InitDbAsync();
         var feeds = await _manager.GetAllFeedsAsync();
 
-        if (feeds.Count == 0)
-        {
-
-            await Task.WhenAll([
-                AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/dotnet/.rss"),
-                AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/csharp/.rss"),
-                AddFeedCommand.ExecuteAsync("https://www.osnews.com/files/recent.xml"),
-                AddFeedCommand.ExecuteAsync("https://news.ycombinator.com/rss"),
-                AddFeedCommand.ExecuteAsync("https://xkcd.com/rss.xml"),
-            ]);
+        if (feeds[0].Children!.Count == 0)
+        {  
+            await AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/dotnet/.rss");
+            await AddFeedCommand.ExecuteAsync("https://www.reddit.com/r/csharp/.rss");
+            await AddFeedCommand.ExecuteAsync("https://www.osnews.com/files/recent.xml");
+            await AddFeedCommand.ExecuteAsync("https://news.ycombinator.com/rss");
+            await AddFeedCommand.ExecuteAsync("https://xkcd.com/rss.xml");
         }
         foreach (var feedDirectory in feeds)
         {
-            if (Feeds != null)
-            {
-                Feeds =
-                [
-                    new ObservableFeed(feedDirectory)
-                ];
-            }
+            Feeds.Add(new ObservableFeed(feedDirectory));
         }
     }
 }

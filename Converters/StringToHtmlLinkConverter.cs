@@ -2,7 +2,8 @@
 using System.Globalization;
 
 using Avalonia.Data.Converters;
-
+// ReSharper disable ReturnTypeCanBeNotNullable
+// Simply because the Interface requires it
 namespace Skimmer.Avalonia.Converters;
 internal class StringToHtmlLinkConverter : IValueConverter
 {
