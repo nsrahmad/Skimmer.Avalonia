@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="using:Skimmer.Avalonia.ViewModels"
 			 xmlns:ic="using:FluentIcons.Avalonia"
-             mc:Ignorable="d" d:DesignHeight="450"
+			 xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+			 mc:Ignorable="d" d:DesignHeight="450"
              x:Class="Skimmer.Avalonia.Views.FeedDirectoryViewControl"
 			 x:DataType="vm:MainWindowViewModel">
 
@@ -19,9 +20,15 @@
 					Spacing="4"
 					DockPanel.Dock="Bottom">
 			<Button Background="{DynamicResource TextControlBackground}"
-					Foreground="{DynamicResource SystemAccentColor}"
-					ToolTip.Tip="Update All Feeds"
-					Command="{Binding UpdateAllFeedsCommand}">
+			        Foreground="{DynamicResource SystemAccentColor}"
+			        ToolTip.Tip="Mark All as Read"
+			        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHostAvalonia:DialogHost}, Path=OpenDialogCommand}">
+				<ic:SymbolIcon Symbol="Add" IconVariant="Filled" FontSize="18" />
+			</Button>
+			<Button Background="{DynamicResource TextControlBackground}"
+			        Foreground="{DynamicResource SystemAccentColor}"
+			        ToolTip.Tip="Update All Feeds"
+			        Command="{Binding UpdateAllFeedsCommand}">
 				<ic:SymbolIcon Symbol="ArrowSync"
 							   IconVariant="Filled"
 							   FontSize="18"></ic:SymbolIcon>

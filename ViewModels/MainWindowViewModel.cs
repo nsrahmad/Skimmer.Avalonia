@@ -21,6 +21,10 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableFeedItem _selectedFeedItem;
 
+    [ObservableProperty] private string _url = string.Empty;
+
+    [ObservableProperty] private bool _isAddDianlogOpen = false;
+
     public ObservableCollection<ObservableFeed> Feeds { get; set; } = [];
 
     public MainWindowViewModel()
@@ -54,6 +58,18 @@ public partial class MainWindowViewModel : ViewModelBase
     private Task<Feed?> OnAddFeed(string link)
     {
        return _manager.AddFeedAsync(link);
+    }
+
+    [RelayCommand]
+    private void OnAddNewFeed(string? link)
+    {
+        if (string.IsNullOrEmpty(link))
+        {
+            IsAddDianlogOpen = false;
+            return;
+        }
+        AddFeedCommand.ExecuteAsync(link);
+        IsAddDianlogOpen = false;
     }
 
     [RelayCommand]
