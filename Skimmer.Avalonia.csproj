@@ -8,6 +8,7 @@
         <ApplicationIcon>Assets\Skimmer.ico</ApplicationIcon>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <AssemblyName>Skimmer</AssemblyName>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
