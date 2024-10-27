@@ -23,7 +23,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private string _url = string.Empty;
 
-    [ObservableProperty] private bool _isAddDianlogOpen = false;
+    [ObservableProperty] private bool _isAddDialogOpen;
 
     public ObservableCollection<ObservableFeed> Feeds { get; set; } = [];
 
@@ -65,11 +65,12 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         if (string.IsNullOrEmpty(link))
         {
-            IsAddDianlogOpen = false;
+            IsAddDialogOpen = false;
             return;
         }
         AddFeedCommand.ExecuteAsync(link);
         IsAddDianlogOpen = false;
+        IsAddDialogOpen = false;
     }
 
     [RelayCommand]

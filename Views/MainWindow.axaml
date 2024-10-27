@@ -25,7 +25,7 @@
 	</Window.Resources>
 	
 	<dialogHost:DialogHost CloseOnClickAway="True"
-	                       IsOpen="{Binding IsAddDianlogOpen}">
+	                       IsOpen="{Binding IsAddDialogOpen}">
 		<dialogHost:DialogHost.DialogContent>
 			<!-- put your dialog content here-->
 			<StackPanel Orientation="Horizontal">
