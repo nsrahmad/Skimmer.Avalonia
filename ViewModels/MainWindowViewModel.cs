@@ -61,15 +61,16 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void OnAddNewFeed(string? link)
+    private async Task OnAddNewFeed(string? link)
     {
         if (string.IsNullOrEmpty(link))
         {
             IsAddDialogOpen = false;
             return;
         }
-        AddFeedCommand.ExecuteAsync(link);
-        IsAddDianlogOpen = false;
+
+        var f = await OnAddFeed(link);
+        Feeds[0].Children!.Add(new ObservableFeed(f!));
         IsAddDialogOpen = false;
     }
 
@@ -83,7 +84,8 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task OnDeleteFeed(int feedId)
     {
         await _manager.DeleteFeedAsync(feedId);
-        Feeds.Remove(Feeds[0].Children!.First((x => x.FeedId == feedId)));
+        var f = Feeds[0].Children!.First(x => x.FeedId == feedId);
+        Feeds[0].Children!.Remove(f);
     }
 
     [RelayCommand]
