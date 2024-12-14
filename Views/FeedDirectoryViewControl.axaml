@@ -1,87 +1,87 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"             
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:vm="using:Skimmer.Avalonia.ViewModels"
-			 xmlns:ic="using:FluentIcons.Avalonia"
-			 xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-			 mc:Ignorable="d" d:DesignHeight="450"
+             xmlns:vm="using:Skimmer.Avalonia.ViewModels"
+             xmlns:ic="using:FluentIcons.Avalonia"
+             xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             mc:Ignorable="d" d:DesignHeight="450"
              x:Class="Skimmer.Avalonia.Views.FeedDirectoryViewControl"
-			 x:DataType="vm:MainWindowViewModel">
+             x:DataType="vm:MainWindowViewModel">
 
-	<Design.DataContext>
-		<vm:MainWindowViewModel />
-	</Design.DataContext>
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
 
-	<DockPanel MinWidth="200">
-		<StackPanel Orientation="Horizontal" 
-					Margin="4"
-					Height="36"
-					Spacing="4"
-					DockPanel.Dock="Bottom">
-			<Button Background="{DynamicResource TextControlBackground}"
-			        Foreground="{DynamicResource SystemAccentColor}"
-			        ToolTip.Tip="Mark All as Read"
-			        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHostAvalonia:DialogHost}, Path=OpenDialogCommand}">
-				<ic:SymbolIcon Symbol="Add" IconVariant="Filled" FontSize="18" />
-			</Button>
-			<Button Background="{DynamicResource TextControlBackground}"
-			        Foreground="{DynamicResource SystemAccentColor}"
-			        ToolTip.Tip="Update All Feeds"
-			        Command="{Binding UpdateAllFeedsCommand}">
-				<ic:SymbolIcon Symbol="ArrowSync"
-							   IconVariant="Filled"
-							   FontSize="18"></ic:SymbolIcon>
-			</Button>
-			<Button Background="{DynamicResource TextControlBackground}"
-					Foreground="{DynamicResource SystemAccentColor}"
-					ToolTip.Tip="Mark All as Read"
-					Command="{Binding MarkAllAsReadCommand}">
-				<ic:SymbolIcon Symbol="CheckmarkNote" IconVariant="Filled" FontSize="18" />
-			</Button>
-		</StackPanel>
-		<TreeView
-			Name="FeedDirectoryView"
-			ItemsSource="{Binding Feeds}"
-			SelectionMode="AlwaysSelected"
-			SelectedItem="{Binding SelectedFeed}"
-			Margin="4 0">
-			<TreeView.Styles>
-				<Style Selector="TreeViewItem">
-					<Setter Property="IsExpanded" Value="True"></Setter>
-				</Style>
-				<Style Selector="TreeViewItem">
-					<Setter Property="CornerRadius" Value="4"></Setter>
-				</Style>
-			</TreeView.Styles>
-			<TreeView.ItemTemplate>
-				<TreeDataTemplate ItemsSource="{Binding Children}">
-					<DockPanel VerticalAlignment="Center"
-							   Background="Transparent"
-							   ToolTip.Tip="{Binding Description}">
-						<DockPanel.ContextMenu>
-							<ContextMenu>
-								<MenuItem Header="Mark All as read" />
-								<MenuItem Header="Delete" 
-								          Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).DeleteFeedCommand}"
-								          CommandParameter="{Binding FeedId}"/>
-							</ContextMenu>
-						</DockPanel.ContextMenu>
-						<Label Content="{Binding UnreadItems}"
-							   Background="{DynamicResource SystemAccentColor}"
-							   CornerRadius="24"
-							   FontSize="12"
-							   Padding="4 2"
-							   Margin="8 0"
-							   IsVisible="{Binding UnreadItems}"
-							   VerticalAlignment="Center"
-							   Foreground="{DynamicResource AccentButtonForeground}"
-							   DockPanel.Dock="Right"></Label>
-						<Label Content="{Binding Title}"
-							   VerticalContentAlignment="Center" />
-					</DockPanel>
-				</TreeDataTemplate>
-			</TreeView.ItemTemplate>
-		</TreeView>
-	</DockPanel>
+    <DockPanel MinWidth="200">
+        <StackPanel Orientation="Horizontal"
+                    Margin="4"
+                    Height="36"
+                    Spacing="4"
+                    DockPanel.Dock="Bottom">
+            <Button Background="{DynamicResource TextControlBackground}"
+                    Foreground="{DynamicResource SystemAccentColor}"
+                    ToolTip.Tip="Mark All as Read"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHostAvalonia:DialogHost}, Path=OpenDialogCommand}">
+                <ic:SymbolIcon Symbol="Add" IconVariant="Filled" FontSize="18" />
+            </Button>
+            <Button Background="{DynamicResource TextControlBackground}"
+                    Foreground="{DynamicResource SystemAccentColor}"
+                    ToolTip.Tip="Update All Feeds"
+                    Command="{Binding UpdateAllFeedsCommand}">
+                <ic:SymbolIcon Symbol="ArrowSync"
+                               IconVariant="Filled"
+                               FontSize="18" />
+            </Button>
+            <Button Background="{DynamicResource TextControlBackground}"
+                    Foreground="{DynamicResource SystemAccentColor}"
+                    ToolTip.Tip="Mark All as Read"
+                    Command="{Binding MarkAllAsReadCommand}">
+                <ic:SymbolIcon Symbol="CheckmarkNote" IconVariant="Filled" FontSize="18" />
+            </Button>
+        </StackPanel>
+        <TreeView
+            Name="FeedDirectoryView"
+            ItemsSource="{Binding Feeds}"
+            SelectionMode="AlwaysSelected"
+            SelectedItem="{Binding SelectedFeed}"
+            Margin="4 0">
+            <TreeView.Styles>
+                <Style Selector="TreeViewItem">
+                    <Setter Property="IsExpanded" Value="True" />
+                </Style>
+                <Style Selector="TreeViewItem">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </TreeView.Styles>
+            <TreeView.ItemTemplate>
+                <TreeDataTemplate ItemsSource="{Binding Children}">
+                    <DockPanel VerticalAlignment="Center"
+                               Background="Transparent"
+                               ToolTip.Tip="{Binding Description}">
+                        <DockPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Mark All as read" />
+                                <MenuItem Header="Delete"
+                                          Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).DeleteFeedCommand}"
+                                          CommandParameter="{Binding FeedId}" />
+                            </ContextMenu>
+                        </DockPanel.ContextMenu>
+                        <Label Content="{Binding UnreadItems}"
+                               Background="{DynamicResource SystemAccentColor}"
+                               CornerRadius="24"
+                               FontSize="12"
+                               Padding="4 2"
+                               Margin="8 0"
+                               IsVisible="{Binding UnreadItems}"
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource AccentButtonForeground}"
+                               DockPanel.Dock="Right" />
+                        <Label Content="{Binding Title}"
+                               VerticalContentAlignment="Center" />
+                    </DockPanel>
+                </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+    </DockPanel>
 </UserControl>

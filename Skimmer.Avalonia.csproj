@@ -1,42 +1,42 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <OutputType>WinExe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
-        <Nullable>enable</Nullable>
-        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-        <ApplicationManifest>app.manifest</ApplicationManifest>
-        <ApplicationIcon>Assets\Skimmer.ico</ApplicationIcon>
-        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-        <AssemblyName>Skimmer</AssemblyName>
-        <LangVersion>12</LangVersion>
-    </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\Skimmer.ico</ApplicationIcon>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <AssemblyName>Skimmer</AssemblyName>
+    <TargetFramework>net9.0</TargetFramework>
+    <PublishAot>true</PublishAot>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <AvaloniaResource Include="Assets\**" />
-    </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**"/>
+  </ItemGroup>
 
-	<PropertyGroup Condition="'$(Configuration)'=='Release'">
-		<DebugSymbols>False</DebugSymbols>
-		<DebugType>None</DebugType>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+  </PropertyGroup>
 
-	<ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.1.4" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.1.4" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.4" />
-        <PackageReference Include="Avalonia.HtmlRenderer" Version="11.0.0" />
-        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.1.4" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.4" />
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-        <PackageReference Include="DialogHost.Avalonia" Version="0.8.1" />
-        <PackageReference Include="FluentIcons.Avalonia" Version="1.1.261" />
-        <PackageReference Include="Humanizer.Core" Version="3.0.0-beta.54" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.999-cibuild0053705-alpha"/>
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.999-cibuild0053705-alpha"/>
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.999-cibuild0053705-alpha"/>
+    <PackageReference Include="Avalonia.HtmlRenderer" Version="11.0.0"/>
+    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.3.999-cibuild0053705-alpha"/>
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.999-cibuild0053705-alpha"/>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
+    <PackageReference Include="DialogHost.Avalonia" Version="0.9.0-preview3"/>
+    <PackageReference Include="FluentIcons.Avalonia" Version="1.1.267-ci"/>
+    <PackageReference Include="Humanizer.Core" Version="3.0.0-beta.54"/>
+  </ItemGroup>
 
 
-    <ItemGroup>
-        <ProjectReference Include="..\Skimmer.Core.Nanorm\Skimmer.Core.Nanorm.csproj" />
-        <ProjectReference Include="..\Skimmer.Core\Skimmer.Core.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Skimmer.Core.Nanorm\Skimmer.Core.Nanorm.csproj"/>
+    <ProjectReference Include="..\Skimmer.Core\Skimmer.Core.csproj"/>
+  </ItemGroup>
 </Project>

@@ -6,73 +6,73 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:conv="clr-namespace:Skimmer.Avalonia.Converters"
-		xmlns:views="clr-namespace:Skimmer.Avalonia.Views"
+        xmlns:views="clr-namespace:Skimmer.Avalonia.Views"
         mc:Ignorable="d" d:DesignWidth="950" d:DesignHeight="450"
         x:Class="Skimmer.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/Skimmer.ico"
         Title="Skimmer">
 
-	<Design.DataContext>
-		<!-- This only sets the DataContext for the previewer in an IDE,
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-		<vm:MainWindowViewModel />
-	</Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
 
-	<Window.Resources>
-		<conv:ThemeColorConverter x:Key="ThemeColorConverter" />
-		<conv:StringToHtmlLinkConverter x:Key="StringToHtmlLinkConverter" />
-	</Window.Resources>
-	
-	<dialogHost:DialogHost CloseOnClickAway="True"
-	                       IsOpen="{Binding IsAddDialogOpen}">
-		<dialogHost:DialogHost.DialogContent>
-			<!-- put your dialog content here-->
-			<StackPanel Orientation="Horizontal">
-				<TextBox Text="{Binding Url, Mode=OneWayToSource}" Width="300"/>
-				<Button 
-					Margin="8 0 0 0"
-				    Command="{Binding AddNewFeedCommand}"
-					CommandParameter="{Binding Url}">
-					Add
-				</Button>
-			</StackPanel>
-		</dialogHost:DialogHost.DialogContent>
-		<!-- put the content over which the dialog is shown here (e.g. your main window grid)-->
-	
-		<Grid ColumnDefinitions="Auto,2*,2*"
-			  RowDefinitions="Auto,Auto,*" >
-			
-			<StackPanel Grid.Row="0"
-			            Grid.Column="0"
-			            Grid.ColumnSpan="3">
-			</StackPanel>
+    <Window.Resources>
+        <conv:ThemeColorConverter x:Key="ThemeColorConverter" />
+        <conv:StringToHtmlLinkConverter x:Key="StringToHtmlLinkConverter" />
+    </Window.Resources>
 
-			<views:FeedDirectoryViewControl DataContext="{Binding }"
-											Grid.Row="1"
-											Grid.Column="0"
-											Grid.RowSpan="2" />
-			
-			<views:FeedItemsListView DataContext="{Binding }"
-									 Grid.Row="1"
-					  Grid.Column="1"
-					  Grid.RowSpan="2"/>
+    <dialogHost:DialogHost CloseOnClickAway="True"
+                           IsOpen="{Binding IsAddDialogOpen}">
+        <dialogHost:DialogHost.DialogContent>
+            <!-- put your dialog content here-->
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding Url, Mode=OneWayToSource}" Width="300" />
+                <Button
+                    Margin="8 0 0 0"
+                    Command="{Binding AddNewFeedCommand}"
+                    CommandParameter="{Binding Url}">
+                    Add
+                </Button>
+            </StackPanel>
+        </dialogHost:DialogHost.DialogContent>
+        <!-- put the content over which the dialog is shown here (e.g. your main window grid)-->
 
-			<Border Grid.Row="1" Grid.Column="2">
-				<StackPanel >
-					<TextBlock Text="{Binding SelectedFeedItem.Title}"
-	                           TextWrapping="Wrap"
-	                           Padding="8 4"
-	                           FontSize="18" />
-					<av:HtmlLabel Text="{Binding SelectedFeedItem.Link, Converter={StaticResource StringToHtmlLinkConverter}}"
-	                              Padding="8 4"
-								  ToolTip.Tip="{Binding SelectedFeedItem.Link}"/>
-				</StackPanel>
-			</Border>
-			<av:HtmlPanel Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}"
-						  Padding="8 4 4 4"
-						  Grid.Row="2"
-						  Grid.Column="2" />
-		</Grid>
-	</dialogHost:DialogHost>
+        <Grid ColumnDefinitions="Auto,2*,2*"
+              RowDefinitions="Auto,Auto,*">
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3" />
+
+            <views:FeedDirectoryViewControl DataContext="{Binding }"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Grid.RowSpan="2" />
+
+            <views:FeedItemsListView DataContext="{Binding }"
+                                     Grid.Row="1"
+                                     Grid.Column="1"
+                                     Grid.RowSpan="2" />
+
+            <Border Grid.Row="1" Grid.Column="2">
+                <StackPanel>
+                    <TextBlock Text="{Binding SelectedFeedItem.Title}"
+                               TextWrapping="Wrap"
+                               Padding="8 4"
+                               FontSize="18" />
+                    <av:HtmlLabel
+                        Text="{Binding SelectedFeedItem.Link, Converter={StaticResource StringToHtmlLinkConverter}}"
+                        Padding="8 4"
+                        ToolTip.Tip="{Binding SelectedFeedItem.Link}" />
+                </StackPanel>
+            </Border>
+            <av:HtmlPanel Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}"
+                          Padding="8 4 4 4"
+                          Grid.Row="2"
+                          Grid.Column="2" />
+        </Grid>
+    </dialogHost:DialogHost>
 </Window>

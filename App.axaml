@@ -4,8 +4,8 @@
              x:Class="Skimmer.Avalonia.App"
              RequestedThemeVariant="Default">
     <Application.Styles>
-		<FluentTheme />
-		<dialogHostAvalonia:DialogHostStyles />
-	</Application.Styles>
+        <FluentTheme />
+        <dialogHostAvalonia:DialogHostStyles />
+    </Application.Styles>
 
 </Application>
