@@ -1,5 +1,5 @@
 ﻿// Copyright © Nisar Ahmad
-// 
+//
 // This program is free software:you can redistribute it and/or modify it under the terms of
 // the GNU General Public License as published by the Free Software Foundation, either
 // version 3 of the License, or (at your option) any later version.
@@ -104,15 +104,41 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task OnMarkAllAsRead()
+    private async Task OnMarkAllAsRead(int feedId)
     {
-        await _manager.MarkAllAsReadAsync();
-        foreach (ObservableFeed feed in Feeds)
+        // TODO: marking Top level feed messes up the count, as it is not handled correctly
+        //in db code.
+
+        await _manager.MarkAllAsReadAsync(feedId);
+
+        // is it a toplevel feed?
+        foreach (ObservableFeed f in Feeds)
         {
-            feed.UnreadItems = 0;
-            foreach (ObservableFeedItem item in feed.FeedItems)
+            if (f.FeedId == feedId)
             {
-                item.IsRead = true;
+                // Every Top-level feed must have at least one child.
+                foreach (ObservableFeed fChild in f.Children!)
+                {
+                    await OnMarkAllAsRead(fChild.FeedId);
+                }
+                return;
+            }
+        }
+
+        foreach (ObservableFeed f in Feeds)
+        {
+            var feed = f.Children!.First((feed) => feed.FeedId == feedId);
+            if (feed != null)
+            {
+                f.UnreadItems -= feed.UnreadItems;
+                feed.UnreadItems = 0;
+                if (feed.Children!.Count > 0)
+                {
+                    foreach (ObservableFeed feedChild in feed.Children)
+                    {
+                        await OnMarkAllAsRead(feedChild.FeedId);
+                    }
+                }
             }
         }
     }
