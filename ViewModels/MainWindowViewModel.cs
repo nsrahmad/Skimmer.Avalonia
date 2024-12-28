@@ -106,8 +106,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private async Task OnMarkAllAsRead(int feedId)
     {
-        // TODO: marking Top level feed messes up the count, as it is not handled correctly
-        //in db code.
+        // TODO: marking Top level feed messes up the count, as it is not handled correctly in db code.
 
         await _manager.MarkAllAsReadAsync(feedId);
 
@@ -128,17 +127,16 @@ public partial class MainWindowViewModel : ViewModelBase
         foreach (ObservableFeed f in Feeds)
         {
             var feed = f.Children!.First((feed) => feed.FeedId == feedId);
-            if (feed != null)
+            f.UnreadItems -= feed.UnreadItems;
+            feed.UnreadItems = 0;
+            if (feed.Children!.Count <= 0)
             {
-                f.UnreadItems -= feed.UnreadItems;
-                feed.UnreadItems = 0;
-                if (feed.Children!.Count > 0)
-                {
-                    foreach (ObservableFeed feedChild in feed.Children)
-                    {
-                        await OnMarkAllAsRead(feedChild.FeedId);
-                    }
-                }
+                continue;
+            }
+
+            foreach (ObservableFeed feedChild in feed.Children)
+            {
+                await OnMarkAllAsRead(feedChild.FeedId);
             }
         }
     }
