@@ -164,6 +164,7 @@ public partial class MainWindowViewModel : ViewModelBase
             {
                 f.FeedItems.Insert(0, new ObservableFeedItem(i));
                 f.UnreadItems++;
+                Feeds[0].UnreadItems++;
             }
         }
     }
