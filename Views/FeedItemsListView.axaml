@@ -28,6 +28,11 @@
                 <Setter Property="Margin" Value="4 2" />
                 <Setter Property="Background" Value="{DynamicResource SystemAltHighColor}" />
             </Style>
+            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource SystemAltHighColor}"/>
+                <Setter Property="BorderThickness" Value="4 1 1 1"></Setter>
+                <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}"></Setter>
+            </Style>
             <Style Selector="ListBoxItem TextBlock.isRead">
                 <Setter Property="FontWeight" Value="Normal" />
             </Style>
