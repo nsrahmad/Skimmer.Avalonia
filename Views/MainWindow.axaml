@@ -7,16 +7,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:conv="clr-namespace:Skimmer.Avalonia.Converters"
         xmlns:views="clr-namespace:Skimmer.Avalonia.Views"
+        xmlns:viewModels="clr-namespace:Skimmer.Core.ViewModels;assembly=Skimmer.Core"
         mc:Ignorable="d" d:DesignWidth="950" d:DesignHeight="450"
         x:Class="Skimmer.Avalonia.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
+        x:DataType="viewModels:MainWindowViewModel"
         Icon="/Assets/Skimmer.ico"
         Title="Skimmer">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel />
+        <viewModels:MainWindowViewModel />
     </Design.DataContext>
 
     <Window.Resources>

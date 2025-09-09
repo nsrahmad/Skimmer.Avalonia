@@ -17,6 +17,7 @@ using Avalonia.Markup.Xaml;
 using Skimmer.Avalonia.ViewModels;
 using Skimmer.Avalonia.Views;
 using Skimmer.Core.Nanorm;
+using Skimmer.Core.ViewModels;
 
 namespace Skimmer.Avalonia;
 

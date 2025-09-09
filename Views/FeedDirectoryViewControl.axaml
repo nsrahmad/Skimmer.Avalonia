@@ -5,12 +5,13 @@
              xmlns:vm="using:Skimmer.Avalonia.ViewModels"
              xmlns:ic="using:FluentIcons.Avalonia"
              xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             xmlns:viewModels="clr-namespace:Skimmer.Core.ViewModels;assembly=Skimmer.Core"
              mc:Ignorable="d" d:DesignHeight="450"
              x:Class="Skimmer.Avalonia.Views.FeedDirectoryViewControl"
-             x:DataType="vm:MainWindowViewModel">
+             x:DataType="viewModels:MainWindowViewModel">
 
     <Design.DataContext>
-        <vm:MainWindowViewModel />
+        <viewModels:MainWindowViewModel />
     </Design.DataContext>
 
     <DockPanel MinWidth="200">
@@ -48,9 +49,7 @@
                     <Setter Property="CornerRadius" Value="4" />
                 </Style>
                 <Style Selector="TreeViewItem:selected /template/ Border#PART_LayoutRoot">
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="BorderThickness" Value="4 1 1 1"></Setter>
-                    <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}"></Setter>
+                    <Setter Property="Opacity" Value="0.9"></Setter>
                 </Style>
             </TreeView.Styles>
             <TreeView.ItemTemplate>
@@ -61,10 +60,10 @@
                         <DockPanel.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Mark All as read"
-                                          Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).MarkAllAsReadCommand}"
+                                          Command="{Binding $parent[Window].((viewModels:MainWindowViewModel)DataContext).MarkAllAsReadCommand}"
                                           CommandParameter="{Binding FeedId}"/>
                                 <MenuItem Header="Delete"
-                                          Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).DeleteFeedCommand}"
+                                          Command="{Binding $parent[Window].((viewModels:MainWindowViewModel)DataContext).DeleteFeedCommand}"
                                           CommandParameter="{Binding FeedId}" />
                             </ContextMenu>
                         </DockPanel.ContextMenu>
