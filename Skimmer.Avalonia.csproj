@@ -31,7 +31,6 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Skimmer.Core.Nanorm\Skimmer.Core.Nanorm.csproj" />
     <ProjectReference Include="..\Skimmer.Core\Skimmer.Core.csproj" />
   </ItemGroup>
 </Project>
