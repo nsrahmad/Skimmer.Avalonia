@@ -18,36 +18,23 @@
 
     <ListBox ItemsSource="{Binding SelectedFeed.FeedItems}"
              SelectedItem="{Binding SelectedFeedItem}"
-             SelectionMode="AlwaysSelected"
-             Margin="4 0"
-             BorderBrush="{DynamicResource ControlBackgroundBrush}"
-             CornerRadius="4">
+             Background="{DynamicResource CardBackgroundFillColorDefault}"
+             SelectionMode="AlwaysSelected">
         <ListBox.Styles>
-            <Style Selector="ListBoxItem">
-                <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="Margin" Value="4 2" />
-                <Setter Property="BorderThickness" Value="4 1 1 1"></Setter>
-                <Setter Property="Background" Value="{DynamicResource SystemAltHighColor}" />
-            </Style>
-            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
-                <Setter Property="Background" Value="{DynamicResource SystemAltHighColor}"/>
-                <Setter Property="BorderThickness" Value="4 1 1 1"></Setter>
-                <Setter Property="BorderBrush" Value="{DynamicResource SystemAccentColor}"></Setter>
-            </Style>
             <Style Selector="ListBoxItem TextBlock.isRead">
-                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimary}" />
             </Style>
             <Style Selector="ListBoxItem TextBlock.isNotRead">
-                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Foreground" Value="{DynamicResource AccentTextFillColorPrimaryBrush}" />
             </Style>
         </ListBox.Styles>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <DockPanel Background="Transparent">
+                <DockPanel Margin="8">
                     <Label Content="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"
-                           DockPanel.Dock="Bottom"
                            FontSize="11"
-                           Margin="0 8 0 0" />
+                           Padding="0 8 0 0"
+                           DockPanel.Dock="Bottom" />
                     <TextBlock Text="{Binding Title}"
                                Classes.isRead="{Binding IsRead}"
                                Classes.isNotRead="{Binding !IsRead}"

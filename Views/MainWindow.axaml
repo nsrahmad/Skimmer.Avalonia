@@ -1,6 +1,5 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Skimmer.Avalonia.ViewModels"
         xmlns:av="clr-namespace:TheArtOfDev.HtmlRenderer.Avalonia;assembly=Avalonia.HtmlRenderer"
         xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,6 +7,7 @@
         xmlns:conv="clr-namespace:Skimmer.Avalonia.Converters"
         xmlns:views="clr-namespace:Skimmer.Avalonia.Views"
         xmlns:viewModels="clr-namespace:Skimmer.Core.ViewModels;assembly=Skimmer.Core"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
         mc:Ignorable="d" d:DesignWidth="950" d:DesignHeight="450"
         x:Class="Skimmer.Avalonia.Views.MainWindow"
         x:DataType="viewModels:MainWindowViewModel"
@@ -26,23 +26,30 @@
     </Window.Resources>
 
     <dialogHost:DialogHost CloseOnClickAway="True"
+                           Background="{DynamicResource CardBackgroundFillColorDefault}"
                            IsOpen="{Binding IsAddDialogOpen}">
         <dialogHost:DialogHost.DialogContent>
             <!-- put your dialog content here-->
-            <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding Url, Mode=OneWayToSource}" Width="300" />
-                <Button
-                    Margin="8 0 0 0"
-                    Command="{Binding AddNewFeedCommand}"
-                    CommandParameter="{Binding Url}">
-                    Add
-                </Button>
+            <StackPanel Orientation="Vertical">
+                <Label>Enter Feed URL</Label>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Text="{Binding Url, Mode=OneWayToSource}"
+                             Width="300"
+                              />
+                    <Button
+                        Margin="8 0 0 0"
+                        Command="{Binding AddNewFeedCommand}"
+                        CommandParameter="{Binding Url}">
+                        Add
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </dialogHost:DialogHost.DialogContent>
         <!-- put the content over which the dialog is shown here (e.g. your main window grid)-->
 
-        <Grid ColumnDefinitions="Auto,2*,2*"
-              RowDefinitions="Auto,Auto,*">
+        <Grid ColumnDefinitions="Auto,*,*"
+              RowDefinitions="Auto,Auto,*"
+              Background="{DynamicResource CardBackgroundFillColorDefault}">
 
             <StackPanel Grid.Row="0"
                         Grid.Column="0"
@@ -51,27 +58,31 @@
             <views:FeedDirectoryViewControl DataContext="{Binding }"
                                             Grid.Row="1"
                                             Grid.Column="0"
-                                            Grid.RowSpan="2" />
+                                            Grid.RowSpan="2"
+                                            Padding="8 0"/>
 
             <views:FeedItemsListView DataContext="{Binding }"
                                      Grid.Row="1"
                                      Grid.Column="1"
                                      Grid.RowSpan="2" />
 
-            <Border Grid.Row="1" Grid.Column="2">
+            <Border Grid.Row="1"
+                    Grid.Column="2"
+                    Padding="8 0"
+                    Margin="8 0">
                 <StackPanel>
                     <TextBlock Text="{Binding SelectedFeedItem.Title}"
                                TextWrapping="Wrap"
-                               Padding="8 4"
-                               FontSize="18" />
-                    <av:HtmlLabel
+                               FontSize="16"
+                               Padding="8 4" />
+                    <av:HtmlPanel
                         Text="{Binding SelectedFeedItem.Link, Converter={StaticResource StringToHtmlLinkConverter}}"
-                        Padding="8 4"
-                        ToolTip.Tip="{Binding SelectedFeedItem.Link}" />
+                        Margin="8 0"
+                        ToolTip.Tip="Open in Default Browser" />
                 </StackPanel>
             </Border>
             <av:HtmlPanel Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}"
-                          Padding="8 4 4 4"
+                          Padding="8"
                           Grid.Row="2"
                           Grid.Column="2" />
         </Grid>

@@ -2,11 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:Skimmer.Avalonia.ViewModels"
-             xmlns:ic="using:FluentIcons.Avalonia"
              xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              xmlns:viewModels="clr-namespace:Skimmer.Core.ViewModels;assembly=Skimmer.Core"
              mc:Ignorable="d" d:DesignHeight="450"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
              x:Class="Skimmer.Avalonia.Views.FeedDirectoryViewControl"
              x:DataType="viewModels:MainWindowViewModel">
 
@@ -14,46 +14,39 @@
         <viewModels:MainWindowViewModel />
     </Design.DataContext>
 
-    <DockPanel MinWidth="200">
+    <DockPanel>
         <StackPanel Orientation="Horizontal"
-                    Margin="4"
-                    Height="36"
-                    Spacing="4"
+                    MaxHeight="32"
+                    Margin="0 8"
                     DockPanel.Dock="Bottom">
-            <Button Background="{DynamicResource TextControlBackground}"
+            <Button Background="Transparent"
                     Foreground="{DynamicResource SystemAccentColor}"
+                    BorderThickness="0"
                     ToolTip.Tip="Add a new feed with URL"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHostAvalonia:DialogHost}, Path=OpenDialogCommand}">
-                <ic:SymbolIcon Symbol="Add" IconVariant="Filled" FontSize="18" />
+                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
+                             Glyph="&#x002B;"
+                             VerticalAlignment="Center"
+                             FontSize="28" />
             </Button>
-            <Button Background="{DynamicResource TextControlBackground}"
-                    Foreground="{DynamicResource SystemAccentColor}"
+            <Button Foreground="{DynamicResource SystemAccentColor}"
                     ToolTip.Tip="Update All Feeds"
+                    Background="Transparent"
+                    BorderThickness="0"
                     Command="{Binding UpdateAllFeedsCommand}">
-                <ic:SymbolIcon Symbol="ArrowSync"
-                               IconVariant="Filled"
-                               FontSize="18" />
+                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
+                             Glyph="&#x27F3;"
+                             VerticalAlignment="Center"
+                             FontSize="24" />
             </Button>
         </StackPanel>
-        <TreeView
+        <ListBox
             Name="FeedDirectoryView"
             ItemsSource="{Binding Feeds}"
             SelectionMode="AlwaysSelected"
-            SelectedItem="{Binding SelectedFeed}"
-            Margin="4 0">
-            <TreeView.Styles>
-                <Style Selector="TreeViewItem">
-                    <Setter Property="IsExpanded" Value="True" />
-                </Style>
-                <Style Selector="TreeViewItem">
-                    <Setter Property="CornerRadius" Value="4" />
-                </Style>
-                <Style Selector="TreeViewItem:selected /template/ Border#PART_LayoutRoot">
-                    <Setter Property="Opacity" Value="0.9"></Setter>
-                </Style>
-            </TreeView.Styles>
-            <TreeView.ItemTemplate>
-                <TreeDataTemplate ItemsSource="{Binding Children}">
+            SelectedItem="{Binding SelectedFeed}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
                     <DockPanel VerticalAlignment="Center"
                                Background="Transparent"
                                ToolTip.Tip="{Binding Description}">
@@ -67,21 +60,19 @@
                                           CommandParameter="{Binding FeedId}" />
                             </ContextMenu>
                         </DockPanel.ContextMenu>
-                        <Label Content="{Binding UnreadItems}"
-                               Background="{DynamicResource SystemAccentColor}"
-                               CornerRadius="24"
-                               FontSize="12"
-                               Padding="4 2"
-                               Margin="8 0"
-                               IsVisible="{Binding UnreadItems}"
-                               VerticalAlignment="Center"
-                               Foreground="{DynamicResource AccentButtonForeground}"
-                               DockPanel.Dock="Right" />
+                        <asyncImageLoader:AdvancedImage DockPanel.Dock="Left"
+                                                        Height="16"
+                                                        Width="16"
+                                                        Source="{Binding ImageUrl}"/>
+                        <ui:InfoBadge Value="{Binding UnreadItems}"
+                                      DockPanel.Dock="Right"
+                                      IsVisible="{Binding UnreadItems}"/>
                         <Label Content="{Binding Title}"
+                               Margin="8 0"
                                VerticalContentAlignment="Center" />
                     </DockPanel>
-                </TreeDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </DockPanel>
 </UserControl>
