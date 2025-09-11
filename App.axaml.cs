@@ -14,9 +14,8 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using Skimmer.Avalonia.ViewModels;
 using Skimmer.Avalonia.Views;
-using Skimmer.Core.Nanorm;
+using Skimmer.Core.Data;
 using Skimmer.Core.ViewModels;
 
 namespace Skimmer.Avalonia;
