@@ -1,5 +1,5 @@
 // Copyright © Nisar Ahmad
-// 
+//
 // This program is free software:you can redistribute it and/or modify it under the terms of
 // the GNU General Public License as published by the Free Software Foundation, either
 // version 3 of the License, or (at your option) any later version.
@@ -21,21 +21,22 @@ public class ThemeColorConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        Application.Current!.TryGetResource("TextControlForeground", Application.Current.ActualThemeVariant,
+        Application.Current!.TryGetResource("TextFillColorPrimary", Application.Current.ActualThemeVariant,
             out object? fg);
-        Application.Current.TryGetResource("TextControlBackground", Application.Current.ActualThemeVariant,
+        Application.Current.TryGetResource("CardBackgroundFillColorDefault", Application.Current.ActualThemeVariant,
             out object? bg);
         Application.Current.TryGetResource("ControlContentThemeFontSize", Application.Current.ActualThemeVariant,
             out object? size);
 
-        SolidColorBrush fgBrush = (SolidColorBrush)fg!;
-        SolidColorBrush bgBrush = (SolidColorBrush)bg!;
+        Color foreground = (Color)fg!;
+        Color background = (Color)bg!;
 
         return $"""
-                <div style="color : rgba({fgBrush.Color.R},{fgBrush.Color.G},{fgBrush.Color.B},{fgBrush.Color.A});
+                <div style="color : rgba({foreground.R},{foreground.G},{foreground.B},{foreground.A});
                     font-size: {size}px;
-                    font-family: Inter,Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
-                    background-color: rgba({bgBrush.Color.R},{bgBrush.Color.G},{bgBrush.Color.B},{bgBrush.Color.A});">
+                    padding: {size}px;
+                    font-family: Segoe UI,Inter,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+                    background-color: rgba({background.R},{background.G},{background.B},{background.A});">
                 {value}
                 </div>
                 """;
