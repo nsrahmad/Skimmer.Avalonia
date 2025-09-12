@@ -31,12 +31,13 @@
             </Style>
             <Style Selector="ListBoxItem">
                 <Setter Property="MaxWidth" Value="350" />
-                <Setter Property="BorderBrush" Value="{actipro:ThemeResource Container1BorderBrush}"></Setter>
-                <Setter Property="Margin" Value="4"></Setter>
-                <Setter Property="Background" Value="{actipro:ThemeResource Container1BackgroundBrush}"/>
-                <Setter Property="CornerRadius" Value="{StaticResource {actipro:ThemeResourceKey CardCornerRadius}}"></Setter>
-                <Setter Property="Padding" Value="{StaticResource {actipro:ThemeResourceKey CardPadding}}"></Setter>
-                <Setter Property="BorderThickness" Value="{StaticResource {actipro:ThemeResourceKey CardBorderThickness}}"></Setter>
+                <Setter Property="BorderBrush" Value="{actipro:ThemeResource Container1BorderBrush}" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Background" Value="{actipro:ThemeResource Container1BackgroundBrush}" />
+                <Setter Property="CornerRadius" Value="{StaticResource {actipro:ThemeResourceKey CardCornerRadius}}" />
+                <Setter Property="Padding" Value="{StaticResource {actipro:ThemeResourceKey CardPadding}}" />
+                <Setter Property="BorderThickness"
+                        Value="{StaticResource {actipro:ThemeResourceKey CardBorderThickness}}" />
             </Style>
             <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
                 <Setter Property="BorderBrush" Value="{actipro:ThemeResource TabItemBorderBrushSubtleSelected}" />
@@ -45,15 +46,15 @@
         </ListBox.Styles>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                    <StackPanel>
-                            <TextBlock Text="{Binding Title}"
-                                       Classes.isRead="{Binding IsRead}"
-                                       Classes.isNotRead="{Binding !IsRead}"
-                                       TextWrapping="Wrap" />
-                            <Label Content="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"
-                                   FontSize="11"
-                                   Padding="0 8 0 0" />
-                    </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="{Binding Title}"
+                               Classes.isRead="{Binding IsRead}"
+                               Classes.isNotRead="{Binding !IsRead}"
+                               TextWrapping="Wrap" />
+                    <Label Content="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"
+                           FontSize="11"
+                           Padding="0 8 0 0" />
+                </StackPanel>
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>

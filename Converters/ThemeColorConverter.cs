@@ -23,34 +23,39 @@ public class ThemeColorConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        Application.Current!.TryGetResource(ThemeResourceKind.DefaultForegroundBrush.ToResourceKey(), Application.Current.ActualThemeVariant,
+        Application.Current!.TryGetResource(ThemeResourceKind.DefaultForegroundBrush.ToResourceKey(),
+            Application.Current.ActualThemeVariant,
             out object? fg);
-        Application.Current.TryGetResource(ThemeResourceKind.DefaultBackgroundBrush.ToResourceKey(), Application.Current.ActualThemeVariant,
+        Application.Current.TryGetResource(ThemeResourceKind.DefaultBackgroundBrush.ToResourceKey(),
+            Application.Current.ActualThemeVariant,
             out object? bg);
-        Application.Current.TryGetResource(ThemeResourceKind.DefaultFontFamily.ToResourceKey(), Application.Current.ActualThemeVariant,
+        Application.Current.TryGetResource(ThemeResourceKind.DefaultFontFamily.ToResourceKey(),
+            Application.Current.ActualThemeVariant,
             out object? fm);
-        Application.Current.TryGetResource(ThemeResourceKind.DefaultFontSizeMedium.ToResourceKey(), Application.Current.ActualThemeVariant,
+        Application.Current.TryGetResource(ThemeResourceKind.DefaultFontSizeMedium.ToResourceKey(),
+            Application.Current.ActualThemeVariant,
             out object? size);
-        Application.Current.TryGetResource(ThemeResourceKind.HyperlinkForegroundBrush.ToResourceKey(), Application.Current.ActualThemeVariant,
+        Application.Current.TryGetResource(ThemeResourceKind.HyperlinkForegroundBrush.ToResourceKey(),
+            Application.Current.ActualThemeVariant,
             out object? linkColor);
 
-        var foreground = (ImmutableSolidColorBrush)fg!;
-        var background = (SolidColorBrush)bg!;
-        var l = (ImmutableSolidColorBrush)linkColor!;
+        ImmutableSolidColorBrush foreground = (ImmutableSolidColorBrush)fg!;
+        SolidColorBrush background = (SolidColorBrush)bg!;
+        ImmutableSolidColorBrush l = (ImmutableSolidColorBrush)linkColor!;
 
         return $$"""
-                <style>
-                a {
-                  color : rgba({{l.Color.R}}, {{l.Color.G}}, {{l.Color.B}}, {{l.Color.A}});
-                }
-                </style>
-                <div style="color : rgba({{foreground.Color.R}},{{foreground.Color.G}},{{foreground.Color.B}},{{foreground.Color.A}});
-                     font-size: {{size}}px;
-                     font-family: {{((FontFamily)fm!).Name}}, sans-serif;
-                     background-color: rgba({{background.Color.R}},{{background.Color.G}},{{background.Color.B}},{{background.Color.A}});">
-                     {{value}}
-                </div>
-                """;
+                 <style>
+                 a {
+                   color : rgba({{l.Color.R}}, {{l.Color.G}}, {{l.Color.B}}, {{l.Color.A}});
+                 }
+                 </style>
+                 <div style="color : rgba({{foreground.Color.R}},{{foreground.Color.G}},{{foreground.Color.B}},{{foreground.Color.A}});
+                      font-size: {{size}}px;
+                      font-family: {{((FontFamily)fm!).Name}}, sans-serif;
+                      background-color: rgba({{background.Color.R}},{{background.Color.G}},{{background.Color.B}},{{background.Color.A}});">
+                      {{value}}
+                 </div>
+                 """;
     }
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>

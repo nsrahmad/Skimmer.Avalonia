@@ -34,8 +34,7 @@
                 <Label>Enter Feed URL</Label>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Text="{Binding Url, Mode=OneWayToSource}"
-                             Width="300"
-                              />
+                             Width="300" />
                     <Button
                         Margin="8 0 0 0"
                         Command="{Binding AddNewFeedCommand}"
@@ -49,51 +48,57 @@
 
         <DockPanel>
             <!-- Title Bar -->
-			<actipro:WindowTitleBar DockPanel.Dock="Top" BorderThickness="0,0,0,1" Padding="0">
-				<actipro:WindowTitleBar.Resources>
-					<actipro:ComparisonConverter x:Key="RightContentMarginConverter">
-						<actipro:ComparisonConverter.TrueResult>
-							<OnPlatform>
-								<OnPlatform.macOS>
-									<Thickness>0,0,0,0</Thickness>
-								</OnPlatform.macOS>
-								<OnPlatform.Default>
-									<Thickness>0,0,20,0</Thickness>
-								</OnPlatform.Default>
-							</OnPlatform>
-						</actipro:ComparisonConverter.TrueResult>
-						<actipro:ComparisonConverter.FalseResult>
-							<Thickness>0,0,0,0</Thickness>
-						</actipro:ComparisonConverter.FalseResult>
-					</actipro:ComparisonConverter>
-				</actipro:WindowTitleBar.Resources>
+            <actipro:WindowTitleBar DockPanel.Dock="Top" BorderThickness="0,0,0,1" Padding="0">
+                <actipro:WindowTitleBar.Resources>
+                    <actipro:ComparisonConverter x:Key="RightContentMarginConverter">
+                        <actipro:ComparisonConverter.TrueResult>
+                            <OnPlatform>
+                                <OnPlatform.macOS>
+                                    <Thickness>0,0,0,0</Thickness>
+                                </OnPlatform.macOS>
+                                <OnPlatform.Default>
+                                    <Thickness>0,0,20,0</Thickness>
+                                </OnPlatform.Default>
+                            </OnPlatform>
+                        </actipro:ComparisonConverter.TrueResult>
+                        <actipro:ComparisonConverter.FalseResult>
+                            <Thickness>0,0,0,0</Thickness>
+                        </actipro:ComparisonConverter.FalseResult>
+                    </actipro:ComparisonConverter>
+                </actipro:WindowTitleBar.Resources>
                 <actiproPrims:OverlayInputFilter>
                     <StackPanel Orientation="Horizontal"
                                 Margin="8 0">
-                        <Image DockPanel.Dock="Left" Width="24" Height="24" Source="/Assets/Skimmer.ico" VerticalAlignment="Center" IsHitTestVisible="False">
+                        <Image DockPanel.Dock="Left" Width="24" Height="24" Source="/Assets/Skimmer.ico"
+                               VerticalAlignment="Center" IsHitTestVisible="False">
                             <Image.Effect>
-                                <DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
+                                <DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3"
+                                                  Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
                             </Image.Effect>
                         </Image>
 
                         <StackPanel Margin="10,7,0,7" VerticalAlignment="Center" IsHitTestVisible="False">
-                            <TextBlock Text="An Atom/RSS Feed Reader" FontSize="12" TextTrimming="CharacterEllipsis" Opacity="0.85" />
-                            <TextBlock Margin="0,-2,0,0" Text="Skimmer" FontSize="18" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="An Atom/RSS Feed Reader" FontSize="12" TextTrimming="CharacterEllipsis"
+                                       Opacity="0.85" />
+                            <TextBlock Margin="0,-2,0,0" Text="Skimmer" FontSize="18" FontWeight="SemiBold"
+                                       TextTrimming="CharacterEllipsis" />
                         </StackPanel>
                     </StackPanel>
                 </actiproPrims:OverlayInputFilter>
 
-				<actipro:WindowTitleBar.RightContent>
-					<actiproPrims:OverlayInputFilter>
-						<StackPanel Margin="{Binding $parent[actipro:WindowTitleBar].HasCaptionButtons, Converter={StaticResource RightContentMarginConverter}}" Orientation="Horizontal">
-							<Button Content="&#x002B;"
+                <actipro:WindowTitleBar.RightContent>
+                    <actiproPrims:OverlayInputFilter>
+                        <StackPanel
+                            Margin="{Binding $parent[actipro:WindowTitleBar].HasCaptionButtons, Converter={StaticResource RightContentMarginConverter}}"
+                            Orientation="Horizontal">
+                            <Button Content="&#x002B;"
                                     ToolTip.Tip="Add a new feed with URL"
                                     Theme="{actipro:ControlTheme TitleBarButton}"
                                     FontSize="24"
                                     FontWeight="Light"
                                     VerticalAlignment="Stretch"
                                     VerticalContentAlignment="Top"
-                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=OpenDialogCommand}"/>
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHost:DialogHost}, Path=OpenDialogCommand}" />
                             <Button Content="&#x27F3;"
                                     ToolTip.Tip="Update All Feeds"
                                     VerticalAlignment="Stretch"
@@ -103,21 +108,22 @@
                                     Theme="{actipro:ControlTheme TitleBarButton}"
                                     Command="{Binding UpdateAllFeedsCommand}" />
                             <actipro:ToggleThemeButton
-									Theme="{actipro:ControlTheme TitleBarToggleThemeButton}"
-									ToolTip.Tip="Toggle Theme" />
-						</StackPanel>
-					</actiproPrims:OverlayInputFilter>
-				</actipro:WindowTitleBar.RightContent>
-			</actipro:WindowTitleBar>
+                                Theme="{actipro:ControlTheme TitleBarToggleThemeButton}"
+                                ToolTip.Tip="Toggle Theme" />
+                        </StackPanel>
+                    </actiproPrims:OverlayInputFilter>
+                </actipro:WindowTitleBar.RightContent>
+            </actipro:WindowTitleBar>
 
             <!-- Status Bar -->
             <actiproPrims:OverlayInputFilter DockPanel.Dock="Bottom">
                 <Border Background="{actipro:ThemeResource StatusBarBackgroundBrush}"
-                        BorderBrush="{actipro:ThemeResource StatusBarBorderBrush}" BorderThickness="{actipro:ThemeResource StatusBarBorderThickness}"
+                        BorderBrush="{actipro:ThemeResource StatusBarBorderBrush}"
+                        BorderThickness="{actipro:ThemeResource StatusBarBorderThickness}"
                         TextElement.Foreground="{actipro:ThemeResource StatusBarForegroundBrush}">
-                    <DockPanel Margin="0,0,0,1" >
+                    <DockPanel Margin="0,0,0,1">
                         <TextBlock Margin="{actipro:ScaledThickness '2.5,0.5'}" Text="{Binding StatusMessage}" />
-                        <actipro:WindowResizeGrip DockPanel.Dock="Right"/>
+                        <actipro:WindowResizeGrip DockPanel.Dock="Right" />
                     </DockPanel>
                 </Border>
             </actiproPrims:OverlayInputFilter>
@@ -130,13 +136,13 @@
                                                 Grid.Row="1"
                                                 Grid.Column="0"
                                                 Grid.RowSpan="2" />
-                <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3"/>
+                <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" />
 
                 <views:FeedItemsListView DataContext="{Binding }"
                                          Grid.Row="1"
                                          Grid.Column="2"
                                          Grid.RowSpan="2" />
-                <GridSplitter Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Width="2"/>
+                <GridSplitter Grid.Row="0" Grid.Column="3" Grid.RowSpan="3" Width="2" />
                 <Border Grid.Row="0" Grid.Column="4"
                         Grid.RowSpan="3"
                         Margin="4"
@@ -157,8 +163,9 @@
                                     ToolTip.Tip="Open in Default Browser" />
                             </StackPanel>
                         </Border>
-                        <av:HtmlPanel Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}"
-                                      AvoidImagesLateLoading="False" />
+                        <av:HtmlPanel
+                            Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}"
+                            AvoidImagesLateLoading="False" />
                     </DockPanel>
                 </Border>
             </Grid>
