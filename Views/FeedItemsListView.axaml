@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converter="clr-namespace:Skimmer.Avalonia.Converters;assembly=Skimmer"
              xmlns:viewModels="clr-namespace:Skimmer.Core.ViewModels;assembly=Skimmer.Core"
+             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="650"
              x:Class="Skimmer.Avalonia.Views.FeedItemsListView"
              x:DataType="viewModels:MainWindowViewModel">
@@ -18,28 +19,41 @@
 
     <ListBox ItemsSource="{Binding SelectedFeed.FeedItems}"
              SelectedItem="{Binding SelectedFeedItem}"
-             Background="{DynamicResource CardBackgroundFillColorDefault}"
+             BorderThickness="0"
+             MinWidth="350"
              SelectionMode="AlwaysSelected">
         <ListBox.Styles>
             <Style Selector="ListBoxItem TextBlock.isRead">
-                <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimary}" />
+                <Setter Property="FontWeight" Value="Normal" />
             </Style>
             <Style Selector="ListBoxItem TextBlock.isNotRead">
-                <Setter Property="Foreground" Value="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+                <Setter Property="FontWeight" Value="Bold" />
+            </Style>
+            <Style Selector="ListBoxItem">
+                <Setter Property="MaxWidth" Value="350" />
+                <Setter Property="BorderBrush" Value="{actipro:ThemeResource Container1BorderBrush}"></Setter>
+                <Setter Property="Margin" Value="4"></Setter>
+                <Setter Property="Background" Value="{actipro:ThemeResource Container1BackgroundBrush}"/>
+                <Setter Property="CornerRadius" Value="{StaticResource {actipro:ThemeResourceKey CardCornerRadius}}"></Setter>
+                <Setter Property="Padding" Value="{StaticResource {actipro:ThemeResourceKey CardPadding}}"></Setter>
+                <Setter Property="BorderThickness" Value="{StaticResource {actipro:ThemeResourceKey CardBorderThickness}}"></Setter>
+            </Style>
+            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                <Setter Property="BorderBrush" Value="{actipro:ThemeResource TabItemBorderBrushSubtleSelected}" />
+                <Setter Property="Background" Value="{actipro:ThemeResource Container1BackgroundBrush}" />
             </Style>
         </ListBox.Styles>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <DockPanel Margin="8">
-                    <Label Content="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"
-                           FontSize="11"
-                           Padding="0 8 0 0"
-                           DockPanel.Dock="Bottom" />
-                    <TextBlock Text="{Binding Title}"
-                               Classes.isRead="{Binding IsRead}"
-                               Classes.isNotRead="{Binding !IsRead}"
-                               TextWrapping="Wrap" />
-                </DockPanel>
+                    <StackPanel>
+                            <TextBlock Text="{Binding Title}"
+                                       Classes.isRead="{Binding IsRead}"
+                                       Classes.isNotRead="{Binding !IsRead}"
+                                       TextWrapping="Wrap" />
+                            <Label Content="{Binding LastUpdatedTime, Converter={StaticResource DateConverter}}"
+                                   FontSize="11"
+                                   Padding="0 8 0 0" />
+                    </StackPanel>
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>

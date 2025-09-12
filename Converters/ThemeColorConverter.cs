@@ -11,9 +11,11 @@
 
 using System;
 using System.Globalization;
+using ActiproSoftware.UI.Avalonia.Themes;
 using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
+using Avalonia.Media.Immutable;
 
 namespace Skimmer.Avalonia.Converters;
 
@@ -21,23 +23,32 @@ public class ThemeColorConverter : IValueConverter
 {
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        Application.Current!.TryGetResource("TextFillColorPrimary", Application.Current.ActualThemeVariant,
+        Application.Current!.TryGetResource(ThemeResourceKind.DefaultForegroundBrush.ToResourceKey(), Application.Current.ActualThemeVariant,
             out object? fg);
-        Application.Current.TryGetResource("CardBackgroundFillColorDefault", Application.Current.ActualThemeVariant,
+        Application.Current.TryGetResource(ThemeResourceKind.DefaultBackgroundBrush.ToResourceKey(), Application.Current.ActualThemeVariant,
             out object? bg);
-        Application.Current.TryGetResource("ControlContentThemeFontSize", Application.Current.ActualThemeVariant,
+        Application.Current.TryGetResource(ThemeResourceKind.DefaultFontFamily.ToResourceKey(), Application.Current.ActualThemeVariant,
+            out object? fm);
+        Application.Current.TryGetResource(ThemeResourceKind.DefaultFontSizeMedium.ToResourceKey(), Application.Current.ActualThemeVariant,
             out object? size);
+        Application.Current.TryGetResource(ThemeResourceKind.HyperlinkForegroundBrush.ToResourceKey(), Application.Current.ActualThemeVariant,
+            out object? linkColor);
 
-        Color foreground = (Color)fg!;
-        Color background = (Color)bg!;
+        var foreground = (ImmutableSolidColorBrush)fg!;
+        var background = (SolidColorBrush)bg!;
+        var l = (ImmutableSolidColorBrush)linkColor!;
 
-        return $"""
-                <div style="color : rgba({foreground.R},{foreground.G},{foreground.B},{foreground.A});
-                    font-size: {size}px;
-                    padding: {size}px;
-                    font-family: Segoe UI,Inter,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
-                    background-color: rgba({background.R},{background.G},{background.B},{background.A});">
-                {value}
+        return $$"""
+                <style>
+                a {
+                  color : rgba({{l.Color.R}}, {{l.Color.G}}, {{l.Color.B}}, {{l.Color.A}});
+                }
+                </style>
+                <div style="color : rgba({{foreground.Color.R}},{{foreground.Color.G}},{{foreground.Color.B}},{{foreground.Color.A}});
+                     font-size: {{size}}px;
+                     font-family: {{((FontFamily)fm!).Name}}, sans-serif;
+                     background-color: rgba({{background.Color.R}},{{background.Color.G}},{{background.Color.B}},{{background.Color.A}});">
+                     {{value}}
                 </div>
                 """;
     }

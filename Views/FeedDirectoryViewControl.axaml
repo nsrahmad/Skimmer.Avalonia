@@ -2,11 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              xmlns:viewModels="clr-namespace:Skimmer.Core.ViewModels;assembly=Skimmer.Core"
              mc:Ignorable="d" d:DesignHeight="450"
-             xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
+             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
              x:Class="Skimmer.Avalonia.Views.FeedDirectoryViewControl"
              x:DataType="viewModels:MainWindowViewModel">
 
@@ -14,65 +13,59 @@
         <viewModels:MainWindowViewModel />
     </Design.DataContext>
 
-    <DockPanel>
-        <StackPanel Orientation="Horizontal"
-                    MaxHeight="32"
-                    Margin="0 8"
-                    DockPanel.Dock="Bottom">
-            <Button Background="Transparent"
-                    Foreground="{DynamicResource SystemAccentColor}"
-                    BorderThickness="0"
-                    ToolTip.Tip="Add a new feed with URL"
-                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=dialogHostAvalonia:DialogHost}, Path=OpenDialogCommand}">
-                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                             Glyph="&#x002B;"
-                             VerticalAlignment="Center"
-                             FontSize="28" />
-            </Button>
-            <Button Foreground="{DynamicResource SystemAccentColor}"
-                    ToolTip.Tip="Update All Feeds"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding UpdateAllFeedsCommand}">
-                <ui:FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}"
-                             Glyph="&#x27F3;"
-                             VerticalAlignment="Center"
-                             FontSize="24" />
-            </Button>
-        </StackPanel>
-        <ListBox
-            Name="FeedDirectoryView"
-            ItemsSource="{Binding Feeds}"
-            SelectionMode="AlwaysSelected"
-            SelectedItem="{Binding SelectedFeed}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DockPanel VerticalAlignment="Center"
-                               Background="Transparent"
-                               ToolTip.Tip="{Binding Description}">
-                        <DockPanel.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="Mark All as read"
-                                          Command="{Binding $parent[Window].((viewModels:MainWindowViewModel)DataContext).MarkAllAsReadCommand}"
-                                          CommandParameter="{Binding FeedId}"/>
-                                <MenuItem Header="Delete"
-                                          Command="{Binding $parent[Window].((viewModels:MainWindowViewModel)DataContext).DeleteFeedCommand}"
-                                          CommandParameter="{Binding FeedId}" />
-                            </ContextMenu>
-                        </DockPanel.ContextMenu>
-                        <asyncImageLoader:AdvancedImage DockPanel.Dock="Left"
-                                                        Height="16"
-                                                        Width="16"
-                                                        Source="{Binding ImageUrl}"/>
-                        <ui:InfoBadge Value="{Binding UnreadItems}"
-                                      DockPanel.Dock="Right"
-                                      IsVisible="{Binding UnreadItems}"/>
-                        <Label Content="{Binding Title}"
-                               Margin="8 0"
-                               VerticalContentAlignment="Center" />
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </DockPanel>
+    <ListBox
+        Name="FeedDirectoryView"
+        ItemsSource="{Binding Feeds}"
+        BorderThickness="0"
+        SelectionMode="AlwaysSelected"
+        SelectedItem="{Binding SelectedFeed}">
+        <ListBox.Styles>
+            <Style Selector="ListBoxItem">
+                <Setter Property="BorderBrush" Value="{actipro:ThemeResource Container1BorderBrush}"></Setter>
+                <Setter Property="Margin" Value="4"></Setter>
+                <Setter Property="Background" Value="{actipro:ThemeResource Container1BackgroundBrush}"/>
+                <Setter Property="CornerRadius" Value="{StaticResource {actipro:ThemeResourceKey CardCornerRadius}}"></Setter>
+                <Setter Property="Padding" Value="{StaticResource {actipro:ThemeResourceKey CardPadding}}"></Setter>
+                <Setter Property="BorderThickness" Value="{StaticResource {actipro:ThemeResourceKey CardBorderThickness}}"></Setter>
+            </Style>
+            <Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+                <Setter Property="BorderBrush" Value="{actipro:ThemeResource TabItemBorderBrushSubtleSelected}" />
+                <Setter Property="Background" Value="{actipro:ThemeResource Container1BackgroundBrush}" />
+            </Style>
+        </ListBox.Styles>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <DockPanel VerticalAlignment="Center"
+                           Background="Transparent"
+                           ToolTip.Tip="{Binding Description}">
+                    <DockPanel.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Mark All as read"
+                                      Command="{Binding $parent[Window].((viewModels:MainWindowViewModel)DataContext).MarkAllAsReadCommand}"
+                                      CommandParameter="{Binding FeedId}" />
+                            <MenuItem Header="Delete"
+                                      Command="{Binding $parent[Window].((viewModels:MainWindowViewModel)DataContext).DeleteFeedCommand}"
+                                      CommandParameter="{Binding FeedId}" />
+                        </ContextMenu>
+                    </DockPanel.ContextMenu>
+                    <asyncImageLoader:AdvancedImage DockPanel.Dock="Left"
+                                                    Height="16"
+                                                    Width="16"
+                                                    Source="{Binding ImageUrl}" />
+                    <Label Content="{Binding UnreadItems}"
+                           FontSize="10"
+                           Background="{actipro:ThemeResource ControlBackgroundBrushEmphasizedAccent}"
+                           Foreground="{actipro:ThemeResource ControlForegroundBrushSolidAccent}"
+                           BorderThickness="{StaticResource {actipro:ThemeResourceKey BadgeBorderThickness}}"
+                           Padding="{StaticResource {actipro:ThemeResourceKey BadgeStringContentPadding}}"
+                           CornerRadius="{StaticResource {actipro:ThemeResourceKey BadgeCornerRadius}}"
+                           DockPanel.Dock="Right"
+                           IsVisible="{Binding UnreadItems}" />
+                    <Label Content="{Binding Title}"
+                           Margin="8 0"
+                           VerticalContentAlignment="Center" />
+                </DockPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </UserControl>

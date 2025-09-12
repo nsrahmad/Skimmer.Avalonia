@@ -9,11 +9,11 @@
 // You should have received a copy of the GNU General Public License along with this
 // program.If not, see <https://www.gnu.org/licenses/>.
 
-using FluentAvalonia.UI.Windowing;
+using Avalonia.Controls;
 
 namespace Skimmer.Avalonia.Views;
 
-public partial class MainWindow : AppWindow
+public partial class MainWindow : Window
 {
     public MainWindow() => InitializeComponent();
 }
