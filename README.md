@@ -19,4 +19,3 @@ See the parent [Skimmer](https://github.com/nsrahmad/Skimmer) which contains the
 and this repository in a single Solution. Just checkout and build in any .Net IDE.
 
 
-
