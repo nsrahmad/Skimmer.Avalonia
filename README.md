@@ -17,5 +17,3 @@ On Linux (AFAIK due to Wayland restrictions) the combined header with window dec
 ### Building
 See the parent [Skimmer](https://github.com/nsrahmad/Skimmer) which contains the [Skimmer.Core](https://github.com/r/nsrhamad/Skimmer.Core)
 and this repository in a single Solution. Just checkout and build in any .Net IDE.
-
-
