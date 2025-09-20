@@ -9,11 +9,16 @@
 // You should have received a copy of the GNU General Public License along with this
 // program.If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 
 namespace Skimmer.Avalonia.Views;
 
 public partial class MainWindow : Window
 {
     public MainWindow() => InitializeComponent();
+
+    private void HyperlinkTextBlock_OnClick(object? sender, RoutedEventArgs e) =>
+        GetTopLevel(UrlTextBlock)!.Launcher.LaunchUriAsync(new Uri(UrlTextBlock.Text!));
 }

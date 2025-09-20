@@ -158,14 +158,14 @@
                                            TextWrapping="Wrap"
                                            FontSize="16" />
                                 <actipro:HyperlinkTextBlock
+                                    x:Name="UrlTextBlock"
                                     Text="{Binding SelectedFeedItem.Link}"
                                     TextWrapping="Wrap"
+                                    Click="HyperlinkTextBlock_OnClick"
                                     ToolTip.Tip="Open in Default Browser" />
                             </StackPanel>
                         </Border>
-                        <av:HtmlPanel
-                            Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}"
-                            AvoidImagesLateLoading="False" />
+                        <av:HtmlPanel Text="{Binding SelectedFeedItem.Description, Converter={StaticResource ThemeColorConverter}}" />
                     </DockPanel>
                 </Border>
             </Grid>
